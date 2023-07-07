@@ -31,10 +31,13 @@ const keySet2 = {
 
 // Character class
 class Fruit {
-  constructor({position, velocity, traits, keySet}) {
+  constructor({position, velocity, traits, 
+    faceLeft, keySet}) 
+  {
     this.position = position;
     this.velocity = velocity;
     this.traits = traits;
+    this.faceLeft = faceLeft;
     this.keySet = keySet;
     this.height = 150;
     this.width = 50;
@@ -46,7 +49,7 @@ class Fruit {
   }
 
   draw() {
-    c.fillStyle = 'red';
+    c.fillStyle = (this.faceLeft ? 'skyblue' : 'pink');
     c.fillRect(
       this.position.x, this.position.y, 
       this.width, this.height
@@ -54,7 +57,10 @@ class Fruit {
     if (this.keySet.atk.pressed) {
       c.fillStyle = 'yellow';
       c.fillRect(
-        this.attack.loc.x, this.attack.loc.y, 
+        this.attack.loc.x + (this.faceLeft ? 
+          this.width - this.attack.width : 0
+        ), 
+        this.attack.loc.y, 
         this.attack.width, this.attack.height
       );
     }
@@ -79,13 +85,14 @@ class Fruit {
     }
     this.position.x += this.velocity.x;
     // Vertical velocity
-    if (this.keySet.w.pressed) {
-      this.velocity.y = -1 * this.traits.jump;
-    }
     if (this.position.y + this.height + 
-      this.velocity.y > canvas.height) 
+      this.velocity.y >= canvas.height) 
     {
-      this.velocity.y = 0;
+      if (this.keySet.w.pressed) {
+        this.velocity.y = -2.5 * this.traits.jump;
+      } else {
+        this.velocity.y = 0;
+      }
     } else {
       this.velocity.y += gravity;
       this.position.y += this.velocity.y;
@@ -97,16 +104,19 @@ class Fruit {
 const p1 = new Fruit({
   position: { x: 200, y: 0 },
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 10 },
+  traits: { accel: 5, jump: 5 },
+  faceLeft: false,
   keySet: keySet1
 });
 const p2 = new Fruit({
   position: { x: 700, y: 0 },
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 10 },
+  traits: { accel: 5, jump: 5 },
+  faceLeft: true,
   keySet: keySet2
 });
 
+let winner = false;
 function checkBounds() {
   if (
     p1.keySet.atk.pressed &&
@@ -116,17 +126,23 @@ function checkBounds() {
     p1.attack.loc.y <= p2.position.y + p2.height
   ) {
     // Player 1 hit player 2
-    console.log('go');
+    if (!winner) {
+      console.log("P1 WINS!");
+      winner = true;
+    }
   }
   if (
     p2.keySet.atk.pressed &&
-    p2.attack.loc.x + p2.attack.width <= p1.position.x &&
-    p2.attack.loc.x <= p1.position.x + p1.width &&
+    p2.attack.loc.x - p2.attack.width + p2.width <= p1.position.x + p1.width &&
+    p2.attack.loc.x + p2.width >= p1.position.x &&
     p2.attack.loc.y + p2.attack.height > p1.position.y &&
     p2.attack.loc.y <= p1.position.y + p1.height
-  ) {
+  ) {d
     // Player 2 hit player 1
-    console.log('go');
+    if (!winner) {
+      console.log("P2 WINS!");
+      winner = true;
+    }
   }
 }
 
