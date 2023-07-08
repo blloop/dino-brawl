@@ -31,10 +31,24 @@
       text-align: end;
     }
 
-    .timer {
+    #timer {
+      display: flex;
       width: 10%;
       height: 100%;
+      align-items: center;
+      justify-content: center;
       background-color: blue;
+      color: white;
+    }
+
+    #game-status {
+      display: none;
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      width: 960px;
+      height: 540px;
+      color: white;
     }
   </style>
 </head>
@@ -43,11 +57,12 @@
     <div class="bar left">
       <div id="health-1"></div>
     </div>
-    <div class="timer"></div>
+    <div id="timer"> 100 </div>
     <div class="bar">
       <div id="health-2"></div>
     </div>
   </div>
+  <div id="game-status"></div>
   <canvas id="canvas"></canvas>  
   <script src="script.js"></script>
 </body>

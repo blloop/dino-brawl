@@ -37,10 +37,12 @@ class Fruit {
     this.position = position;
     this.velocity = velocity;
     this.traits = traits;
+    this.health = traits.health;
     this.faceLeft = faceLeft;
     this.keySet = keySet;
     this.height = 150;
     this.width = 50;
+    this.canAttack = true;
     this.attacking = false;
     this.attack = {
       pos: {
@@ -102,7 +104,12 @@ class Fruit {
       this.position.y += this.velocity.y;
     }
     // Attack data
-    this.attacking = this.keySet.atk.pressed
+    if (this.keySet.atk.pressed && this.canAttack) {
+      this.attacking = true;
+      this.canAttack = false;
+      setTimeout(() => this.attacking = false, 200);
+      setTimeout(() => this.canAttack = true, 1000);
+    }
     this.attack.pos.x = this.position.x + (this.faceLeft && -50),
     this.attack.pos.y = this.position.y;
     this.draw();  
@@ -131,6 +138,30 @@ function collide(player, attack) {
     attack.pos.y <= player.position.y + player.height
 }
 
+function endGame() {
+  let text = document.getElementById('game-status');
+  text.style.display = 'flex';
+  text.innerHTML = p1.health > p2.health ?
+    'P1 Wins!' : (p2.health > p1.health ?
+      'P2 Wins!' : 'Tie Game.');
+}
+
+let timer = 5;
+let gameTimer;
+function updateTimer() {
+  if (p1.health == 0 || p2.health == 0) {
+    endGame();
+  }
+  if (timer > 0) {
+    gameTimer = setTimeout(updateTimer, 1000);
+    timer -= 1;
+    document.getElementById('timer').innerText = timer;
+  } else {
+    endGame();
+  }
+  
+}
+
 function loop() {
   window.requestAnimationFrame(loop);
   c.fillStyle = 'black';
@@ -139,21 +170,22 @@ function loop() {
   p2.update();
   if (p1.attacking && collide(p2, p1.attack)) {    
     p1.attacking = false;
-    p2.traits.health -= 1;
+    p2.health = Math.max(p2.health - 1, 0);
     document.getElementById('health-2').style.width = 
-      `${p2.traits.health * 10}%`;
+      `${p2.health * 10}%`;
     console.log("P1 WINS!");
   } 
   if (p2.attacking && collide(p1, p2.attack)) {   
     p2.attacking = false; 
-    p1.traits.health -= 1;
+    p1.health = Math.max(p1.health - 1, 0);
     document.getElementById('health-1').style.width = 
-      `${p1.traits.health * 10}%`;
+      `${p1.health * 10}%`;
     console.log("P2 WINS!");
   } 
 }
 
 loop();
+updateTimer();
 
 window.addEventListener('keydown', (event) => {
   switch (event.key) {
