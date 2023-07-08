@@ -31,9 +31,9 @@ const keySet2 = {
 
 // Character class
 class Fruit {
-  constructor({position, velocity, traits, 
-    faceLeft, keySet}) 
-  {
+  constructor({
+    position, velocity, traits, faceLeft, keySet
+  }) {
     this.position = position;
     this.velocity = velocity;
     this.traits = traits;
@@ -41,8 +41,12 @@ class Fruit {
     this.keySet = keySet;
     this.height = 150;
     this.width = 50;
+    this.attacking = false;
     this.attack = {
-      loc: this.position,
+      pos: {
+        x: this.position.x,
+        y: this.position.y
+      },
       width: 100,
       height: 50
     };
@@ -54,13 +58,13 @@ class Fruit {
       this.position.x, this.position.y, 
       this.width, this.height
     );
-    if (this.keySet.atk.pressed) {
+    if (this.attacking) {
       c.fillStyle = 'yellow';
       c.fillRect(
-        this.attack.loc.x + (this.faceLeft ? 
+        this.attack.pos.x + (this.faceLeft ? 
           this.width - this.attack.width : 0
         ), 
-        this.attack.loc.y, 
+        this.attack.pos.y, 
         this.attack.width, this.attack.height
       );
     }
@@ -97,6 +101,10 @@ class Fruit {
       this.velocity.y += gravity;
       this.position.y += this.velocity.y;
     }
+    // Attack data
+    this.attacking = this.keySet.atk.pressed
+    this.attack.pos.x = this.position.x + (this.faceLeft && -50),
+    this.attack.pos.y = this.position.y;
     this.draw();  
   }
 }
@@ -104,46 +112,23 @@ class Fruit {
 const p1 = new Fruit({
   position: { x: 200, y: 0 },
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5 },
+  traits: { accel: 5, jump: 5, health: 10 },
   faceLeft: false,
   keySet: keySet1
 });
 const p2 = new Fruit({
   position: { x: 700, y: 0 },
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5 },
+  traits: { accel: 5, jump: 5, health: 10 },
   faceLeft: true,
   keySet: keySet2
 });
 
-let winner = false;
-function checkBounds() {
-  if (
-    p1.keySet.atk.pressed &&
-    p1.attack.loc.x + p1.attack.width >= p2.position.x &&
-    p1.attack.loc.x <= p2.position.x + p2.width &&
-    p1.attack.loc.y + p1.attack.height > p2.position.y &&
-    p1.attack.loc.y <= p2.position.y + p2.height
-  ) {
-    // Player 1 hit player 2
-    if (!winner) {
-      console.log("P1 WINS!");
-      winner = true;
-    }
-  }
-  if (
-    p2.keySet.atk.pressed &&
-    p2.attack.loc.x - p2.attack.width + p2.width <= p1.position.x + p1.width &&
-    p2.attack.loc.x + p2.width >= p1.position.x &&
-    p2.attack.loc.y + p2.attack.height > p1.position.y &&
-    p2.attack.loc.y <= p1.position.y + p1.height
-  ) {d
-    // Player 2 hit player 1
-    if (!winner) {
-      console.log("P2 WINS!");
-      winner = true;
-    }
-  }
+function collide(player, attack) {
+  return attack.pos.x + attack.width >= player.position.x &&
+    attack.pos.x <= player.position.x + player.width &&
+    attack.pos.y +  attack.height > player.position.y &&
+    attack.pos.y <= player.position.y + player.height
 }
 
 function loop() {
@@ -152,7 +137,20 @@ function loop() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   p1.update();
   p2.update();
-  checkBounds();  
+  if (p1.attacking && collide(p2, p1.attack)) {    
+    p1.attacking = false;
+    p2.traits.health -= 1;
+    document.getElementById('health-2').style.width = 
+      `${p2.traits.health * 10}%`;
+    console.log("P1 WINS!");
+  } 
+  if (p2.attacking && collide(p1, p2.attack)) {   
+    p2.attacking = false; 
+    p1.traits.health -= 1;
+    document.getElementById('health-1').style.width = 
+      `${p1.traits.health * 10}%`;
+    console.log("P2 WINS!");
+  } 
 }
 
 loop();
