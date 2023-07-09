@@ -13,10 +13,8 @@ class Fighter {
     this.canAttack = true;
     this.attacking = false;
     this.attack = {
-      pos: {
-        x: this.position.x,
-        y: this.position.y
-      },
+      x: this.position.x,
+      y: this.position.y,
       width: 100,
       height: 50
     };
@@ -31,10 +29,10 @@ class Fighter {
     if (this.attacking) {
       c.fillStyle = 'yellow';
       c.fillRect(
-        this.attack.pos.x + (this.faceLeft ? 
+        this.attack.x + (this.faceLeft ? 
           this.width - this.attack.width : 0
         ), 
-        this.attack.pos.y, 
+        this.attack.y, 
         this.attack.width, this.attack.height
       );
     }
@@ -46,16 +44,16 @@ class Fighter {
       this.velocity.x = this.velocity.x / 1.2;
     }
     if (this.keySet.a.pressed) {
-      this.velocity.x -= this.traits.accel / 3;
+      this.velocity.x -= this.traits.accel / 5;
     } 
     if (this.keySet.d.pressed) {
-      this.velocity.x += this.traits.accel / 3;
+      this.velocity.x += this.traits.accel / 5;
     }
-    if (this.velocity.x > this.traits.accel * 2) {
-      this.velocity.x = this.traits.accel * 2
+    if (this.velocity.x > this.traits.accel * 1.5) {
+      this.velocity.x = this.traits.accel * 1.5
     }
-    if (this.velocity.x < this.traits.accel * -2) {
-      this.velocity.x = this.traits.accel * -2
+    if (this.velocity.x < this.traits.accel * -1.5) {
+      this.velocity.x = this.traits.accel * -1.5
     }
     this.position.x += this.velocity.x;
     // Vertical velocity
@@ -78,8 +76,8 @@ class Fighter {
       setTimeout(() => this.attacking = false, 200);
       setTimeout(() => this.canAttack = true, 1000);
     }
-    this.attack.pos.x = this.position.x + (this.faceLeft && -50),
-    this.attack.pos.y = this.position.y;
+    this.attack.x = this.position.x + (this.faceLeft && -50),
+    this.attack.y = this.position.y;
     this.draw();  
   }
 }

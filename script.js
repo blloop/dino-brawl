@@ -32,9 +32,10 @@ const keySet2 = {
 // Sprite class declarations
 const bg = new Sprite({
   position: { x: 0, y: 0 },
-  width: canvas.width,
-  height: canvas.height,
-  source: 'img/bg.png'
+  size: { width: canvas.width, height: canvas.height },
+  source: 'img/bg.png',
+  scale: 1,
+  frames: 1,
 })
 
 // Fighter class declarations
@@ -43,21 +44,29 @@ const p1 = new Fighter({
   velocity: { x: 0, y: 0 },
   traits: { accel: 5, jump: 5, health: 10 },
   faceLeft: false,
-  keySet: keySet1
+  keySet: keySet1,
+  size: { width: 50, height: 150 },
+  source: 'img/red-sprites.png',
+  scale: 10,
+  frames: 24
 });
 const p2 = new Fighter({
   position: { x: 700, y: 0 },
   velocity: { x: 0, y: 0 },
   traits: { accel: 5, jump: 5, health: 10 },
   faceLeft: true,
-  keySet: keySet2
+  keySet: keySet2,
+  size: { width: 50, height: 150 },
+  source: 'img/blue-sprites.png',
+  scale: 10,
+  frames: 24
 });
 
 function collide(player, attack) {
-  return attack.pos.x + attack.width >= player.position.x &&
-    attack.pos.x <= player.position.x + player.width &&
-    attack.pos.y +  attack.height > player.position.y &&
-    attack.pos.y <= player.position.y + player.height
+  return attack.x + attack.width >= player.position.x &&
+    attack.x <= player.position.x + player.width &&
+    attack.y +  attack.height > player.position.y &&
+    attack.y <= player.position.y + player.height
 }
 
 function endGame() {
