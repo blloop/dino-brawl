@@ -1,15 +1,14 @@
-class Fighter {
+class Fighter extends AnimatedSprite {
   constructor({
-    position, velocity, traits, faceLeft, keySet
+    position, velocity, traits, faceLeft, keySet,
+    size, source, scale = 1, frames = 1
   }) {
-    this.position = position;
+    super({ position, size, source, scale, frames });
     this.velocity = velocity;
     this.traits = traits;
     this.health = traits.health;
     this.faceLeft = faceLeft;
     this.keySet = keySet;
-    this.height = 150;
-    this.width = 50;
     this.canAttack = true;
     this.attacking = false;
     this.attack = {
@@ -18,25 +17,27 @@ class Fighter {
       width: 100,
       height: 50
     };
+    this.timeStamp = 0;
+    this.idx = 0;
   }
 
-  draw() {
-    c.fillStyle = (this.faceLeft ? 'skyblue' : 'pink');
-    c.fillRect(
-      this.position.x, this.position.y, 
-      this.width, this.height
-    );
-    if (this.attacking) {
-      c.fillStyle = 'yellow';
-      c.fillRect(
-        this.attack.x + (this.faceLeft ? 
-          this.width - this.attack.width : 0
-        ), 
-        this.attack.y, 
-        this.attack.width, this.attack.height
-      );
-    }
-  }
+  // draw() {
+  //   c.fillStyle = (this.faceLeft ? 'skyblue' : 'pink');
+  //   c.fillRect(
+  //     this.position.x, this.position.y, 
+  //     this.width, this.height
+  //   );
+  //   if (this.attacking) {
+  //     c.fillStyle = 'yellow';
+  //     c.fillRect(
+  //       this.attack.x + (this.faceLeft ? 
+  //         this.width - this.attack.width : 0
+  //       ), 
+  //       this.attack.y, 
+  //       this.attack.width, this.attack.height
+  //     );
+  //   }
+  // }
 
   update() {
     // Horizontal velocity
