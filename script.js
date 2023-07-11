@@ -44,22 +44,18 @@ const p1 = new Fighter({
   position: { x: 200, y: 0 },
   velocity: { x: 0, y: 0 },
   traits: { accel: 5, jump: 5, health: 10 },
-  faceLeft: false,
+  flip: false,
   keySet: keySet1,
-  size: { width: 50, height: 150 },
+  size: { width: 60, height: 75 },
   sprites: {
-    idle: {
-      src: 'img/red-idle.png',
-      frames: 4
-    },
-    run: {
-      src: 'img/red-run.png',
-      frames: 6
-    },
-    jump: {
-      src: 'img/red-jump.png',
-      frames: 4
-    }
+    src: 'img/red-sprites.png',
+    frames: 24,
+    idle: [0, 3], 
+    run: [4, 9], 
+    jump: [10, 13], 
+    hit: [14, 16], 
+    crouch: [17, 17],
+    lowrun: [18, 23]
   },
   scale: 5,
   offset: { x: 6, y: 6 }
@@ -68,22 +64,18 @@ const p2 = new Fighter({
   position: { x: 700, y: 0 },
   velocity: { x: 0, y: 0 },
   traits: { accel: 5, jump: 5, health: 10 },
-  faceLeft: true,
+  flip: true,
   keySet: keySet2,
-  size: { width: 50, height: 150 },
+  size: { width: 60, height: 75 },
   sprites: {
-    idle: {
-      src: 'img/red-idle.png',
-      frames: 4
-    },
-    run: {
-      src: 'img/red-run.png',
-      frames: 6
-    },
-    jump: {
-      src: 'img/red-jump.png',
-      frames: 4
-    }
+    src: 'img/red-sprites-flip.png',
+    frames: 24,
+    idle: [0, 3], 
+    run: [4, 9], 
+    jump: [10, 13], 
+    hit: [14, 16], 
+    crouch: [17, 17],
+    lowrun: [18, 23]
   },
   scale: 5,
   offset: { x: 6, y: 6 }
@@ -96,6 +88,21 @@ function collide(player, attack) {
     attack.y <= player.position.y + player.height
 }
 
+function checkCombat() {
+  if (p1.attacking && collide(p2, p1.attack)) {
+    p1.attacking = false;
+    p2.takeHit();
+    document.getElementById('health-2').style.width = 
+      `${p2.health * 10}%`;
+  }
+  if (p2.attacking && collide(p1, p2.attack)) { 
+    p2.attacking = false;  
+    p1.takeHit();
+    document.getElementById('health-1').style.width = 
+      `${p1.health * 10}%`;
+  } 
+}
+
 function endGame() {
   let text = document.getElementById('game-status');
   text.style.display = 'flex';
@@ -104,7 +111,7 @@ function endGame() {
       'P2 Wins!' : 'Tie Game.');
 }
 
-let timer = 15;
+let timer = 30;
 let gameTimer;
 function updateTimer() {
   if (p1.health == 0 || p2.health == 0) {
@@ -116,31 +123,17 @@ function updateTimer() {
     document.getElementById('timer').innerText = timer;
   } else {
     endGame();
-  }
-  
+  }  
 }
 
 function loop() {
   window.requestAnimationFrame(loop);
   c.fillStyle = 'black';
   c.fillRect(0, 0, canvas.width, canvas.height);
+  checkCombat();
   bg.update();
   p1.update();
   p2.update();
-  if (p1.attacking && collide(p2, p1.attack)) {    
-    p1.attacking = false;
-    p2.health = Math.max(p2.health - 1, 0);
-    document.getElementById('health-2').style.width = 
-      `${p2.health * 10}%`;
-    console.log("P1 WINS!");
-  } 
-  if (p2.attacking && collide(p1, p2.attack)) {   
-    p2.attacking = false; 
-    p1.health = Math.max(p1.health - 1, 0);
-    document.getElementById('health-1').style.width = 
-      `${p1.health * 10}%`;
-    console.log("P2 WINS!");
-  } 
 }
 
 loop();
@@ -161,7 +154,7 @@ window.addEventListener('keydown', (event) => {
     case 'ArrowLeft': 
       keySet2.a.pressed = true; break;
     case 'ArrowDown': 
-      keySet2.w.pressed = true; break;
+      keySet2.s.pressed = true; break;
     case 'ArrowRight': 
       keySet2.d.pressed = true; break;
     case 'f':
@@ -186,7 +179,7 @@ window.addEventListener('keyup', (event) => {
     case 'ArrowLeft': 
       keySet2.a.pressed = false; break;
     case 'ArrowDown': 
-      keySet2.w.pressed = false; break;
+      keySet2.s.pressed = false; break;
     case 'ArrowRight': 
       keySet2.d.pressed = false; break;    
     case 'f':

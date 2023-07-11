@@ -21,26 +21,28 @@ class Sprite {
 
 class AnimatedSprite extends Sprite {
   constructor({ 
-      position, size, sprites, 
+      position, size, sprites, flip = false, 
       offset = {x: 0, y: 0}, scale = 1
   }) {
-    super({ position, size, source: sprites.idle.src });
+    super({ position, size, source: sprites.src });
     this.sprites = sprites;
+    this.flip = flip;
     this.offset = offset;
     this.scale = scale;
-    this.frames = sprites.idle.frames;
+
+    this.frames = sprites.frames;
     this.state = 'idle';
     this.timeStamp = 0;
-    this.idx = 0;
+    this.idx = sprites.idle[0];
   }
 
   draw() {
     c.drawImage(this.image, 
       this.idx * (this.image.width / this.frames),
       0, 
-      this.image.width/ this.frames, 
+      this.image.width / this.frames,
       this.image.height,
-      this.position.x - (this.offset.x * this.scale),
+      this.position.x - (this.offset.x * this.scale),        
       this.position.y - (this.offset.y * this.scale),
       (this.image.width / this.frames) * this.scale,
       this.image.height * this.scale
@@ -51,16 +53,15 @@ class AnimatedSprite extends Sprite {
   sprite(name) {
     if (this.state === name) return;
     this.state = name;
-    this.idx = 0;
-    this.image.src = this.sprites[name].src;
-    this.frames = this.sprites[name].frames;
+    this.idx = this.sprites[name][0];
+    this.timeStamp = 0;
   }
 
   animate() {
     this.timeStamp += 1;
-    if (this.timeStamp % 10 == 0) {
-      this.idx = (this.idx + 1) % this.frames;
-      console.log('idx is: ' + this.idx);
+    if (this.timeStamp % 8 == 0) {
+      this.idx = this.idx === this.sprites[this.state][1] ? 
+        this.sprites[this.state][0] : this.idx + 1;
     }
   }
 
