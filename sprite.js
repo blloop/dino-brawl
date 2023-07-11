@@ -20,8 +20,12 @@ class Sprite {
 }
 
 class AnimatedSprite extends Sprite {
-  constructor({ position, size, source, scale, frames }) {
+  constructor({ 
+      position, size, source, 
+      offset = {x: 0, y: 0}, scale = 1, frames = 1
+    }) {
     super({ position, size, source });
+    this.offset = offset;
     this.scale = scale;
     this.frames = frames;
     this.timeStamp = 0;
@@ -34,7 +38,8 @@ class AnimatedSprite extends Sprite {
       0, 
       this.image.width/ this.frames, 
       this.image.height,
-      this.position.x, this.position.y, 
+      this.position.x - (this.offset.x * this.scale),
+      this.position.y - (this.offset.y * this.scale),
       (this.image.width / this.frames) * this.scale,
       this.image.height * this.scale
     );

@@ -1,9 +1,11 @@
 class Fighter extends AnimatedSprite {
   constructor({
     position, velocity, traits, faceLeft, keySet,
-    size, source, scale = 1, frames = 1
+    size, source, offset, scale, frames
   }) {
-    super({ position, size, source, scale, frames });
+    super({ 
+      position, size, source, offset, scale, frames 
+    });
     this.velocity = velocity;
     this.traits = traits;
     this.health = traits.health;
@@ -59,7 +61,7 @@ class Fighter extends AnimatedSprite {
     this.position.x += this.velocity.x;
     // Vertical velocity
     if (this.position.y + this.height + 
-      this.velocity.y >= canvas.height) 
+      this.velocity.y >= canvas.height - 20) 
     {
       if (this.keySet.w.pressed) {
         this.velocity.y = -2.5 * this.traits.jump;

@@ -7,6 +7,7 @@ const canvas = document.getElementById('canvas');
 canvas.width = 960;
 canvas.height = 540;
 const c = canvas.getContext('2d');
+c.imageSmoothingEnabled = false;
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 // List of game constants
@@ -47,8 +48,9 @@ const p1 = new Fighter({
   keySet: keySet1,
   size: { width: 50, height: 150 },
   source: 'img/red-sprites.png',
-  scale: 10,
-  frames: 24
+  scale: 5,
+  frames: 24,
+  offset: { x: 6, y: 6 }
 });
 const p2 = new Fighter({
   position: { x: 700, y: 0 },
@@ -58,8 +60,9 @@ const p2 = new Fighter({
   keySet: keySet2,
   size: { width: 50, height: 150 },
   source: 'img/blue-sprites.png',
-  scale: 10,
-  frames: 24
+  scale: 5,
+  frames: 24,
+  offset: { x: 6, y: 6 }
 });
 
 function collide(player, attack) {
