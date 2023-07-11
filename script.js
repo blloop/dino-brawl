@@ -47,9 +47,17 @@ const p1 = new Fighter({
   faceLeft: false,
   keySet: keySet1,
   size: { width: 50, height: 150 },
-  source: 'img/red-sprites.png',
+  sprites: {
+    idle: {
+      src: 'img/red-idle.png',
+      frames: 4
+    },
+    run: {
+      src: 'img/red-run.png',
+      frames: 6
+    }
+  },
   scale: 5,
-  frames: 24,
   offset: { x: 6, y: 6 }
 });
 const p2 = new Fighter({
@@ -59,9 +67,13 @@ const p2 = new Fighter({
   faceLeft: true,
   keySet: keySet2,
   size: { width: 50, height: 150 },
-  source: 'img/blue-sprites.png',
+  sprites: {
+    idle: {
+      src: 'img/red-idle.png',
+      frames: 4
+    }
+  },
   scale: 5,
-  frames: 24,
   offset: { x: 6, y: 6 }
 });
 

@@ -1,10 +1,10 @@
 class Fighter extends AnimatedSprite {
   constructor({
     position, velocity, traits, faceLeft, keySet,
-    size, source, offset, scale, frames
+    size, sprites, offset, scale, frames
   }) {
     super({ 
-      position, size, source, offset, scale, frames 
+      position, size, sprites, offset, scale, frames 
     });
     this.velocity = velocity;
     this.traits = traits;
@@ -48,9 +48,12 @@ class Fighter extends AnimatedSprite {
     }
     if (this.keySet.a.pressed) {
       this.velocity.x -= this.traits.accel / 5;
-    } 
-    if (this.keySet.d.pressed) {
+      this.sprite('run');
+    } else if (this.keySet.d.pressed) {
       this.velocity.x += this.traits.accel / 5;
+      this.sprite('run');
+    } else {
+      this.sprite('idle');
     }
     if (this.velocity.x > this.traits.accel * 1.5) {
       this.velocity.x = this.traits.accel * 1.5
@@ -64,7 +67,7 @@ class Fighter extends AnimatedSprite {
       this.velocity.y >= canvas.height - 20) 
     {
       if (this.keySet.w.pressed) {
-        this.velocity.y = -2.5 * this.traits.jump;
+        this.velocity.y = -2 * this.traits.jump;
       } else {
         this.velocity.y = 0;
       }
@@ -81,6 +84,7 @@ class Fighter extends AnimatedSprite {
     }
     this.attack.x = this.position.x + (this.faceLeft && -50),
     this.attack.y = this.position.y;
-    this.draw();  
+    this.animate();
+    this.draw();
   }
 }
