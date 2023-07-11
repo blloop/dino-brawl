@@ -1,10 +1,10 @@
 class Fighter extends AnimatedSprite {
   constructor({
-    position, size, sprites, offset, scale, 
+    position, size, sprites, rate, offset, scale, 
     velocity, traits, attackInfo, keySet, flip
   }) {
     super({ 
-      position, size, sprites, offset, scale
+      position, size, sprites, rate, offset, scale
     });
     this.velocity = velocity;
     this.traits = traits;
@@ -16,9 +16,11 @@ class Fighter extends AnimatedSprite {
     this.attack = null;
   }
 
-  takeHit() {
-    this.health = Math.max(this.health - 1, 0);
-    this.sprite('hit');
+  takeHit(damage) {
+    if (this.state !== 'hit') {
+      this.health = Math.max(this.health - damage, 0);
+      this.sprite('hit');
+    }
   }
 
   update() {
@@ -54,11 +56,13 @@ class Fighter extends AnimatedSprite {
     }
     // Attack data
     if (this.keySet.atk.pressed && this.canAttack) {
-      console.log('making attack!');
+      // TODO: Attack mechanic improve
       this.attack = new Attack({
         position: { 
-          x: this.position.x + 
-            (this.width * (this.flip ? -1 : 1)),
+          x: this.position.x + (this.flip ? 
+            this.attackInfo.size.width * -1 :
+            this.width
+          ),
           y: this.position.y 
         },
         size: { 
@@ -66,6 +70,7 @@ class Fighter extends AnimatedSprite {
           height: this.attackInfo.size.height
         }, 
         sprites: this.attackInfo.sprites,
+        rate: this.attackInfo.rate,
         offset: this.attackInfo.offset,
         scale: this.attackInfo.scale,
         damage: this.attackInfo.damage,
@@ -74,7 +79,7 @@ class Fighter extends AnimatedSprite {
       });
       this.canAttack = false;
       setTimeout(() => this.canAttack = true, 650);
-      setTimeout(() => this.attack = null, 100);
+      setTimeout(() => this.attack = null, 150);
     }
     // Choose sprite based on state
     if (this.state === 'hit') {

@@ -21,11 +21,12 @@ class Sprite {
 
 class AnimatedSprite extends Sprite {
   constructor({ 
-      position, size, sprites, 
+      position, size, sprites, rate,
       offset = {x: 0, y: 0}, scale = 1
   }) {
     super({ position, size, source: sprites.src });
     this.sprites = sprites;
+    this.rate = 8 / rate; // Valid values: 1, 2, 4
     this.offset = offset;
     this.scale = scale;
 
@@ -58,7 +59,7 @@ class AnimatedSprite extends Sprite {
 
   animate() {
     this.timeStamp += 1;
-    if (this.timeStamp % 8 == 0) {
+    if (this.timeStamp % this.rate == 0) {
       this.idx = this.idx === this.sprites[this.state][1] ? 
         this.sprites[this.state][0] : this.idx + 1;
     }

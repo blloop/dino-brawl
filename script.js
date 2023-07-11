@@ -42,7 +42,7 @@ const bg = new Sprite({
 // Fighter class declarations
 const p1 = new Fighter({
   position: { x: 200, y: 0 },
-  size: { width: 60, height: 75 },
+  size: { width: 70, height: 75 },
   sprites: {
     src: 'img/red-sprites.png',
     frames: 29,
@@ -54,10 +54,11 @@ const p1 = new Fighter({
     lowrun: [18, 23],
     attack: [24, 28]
   },
+  rate: 1, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 10 },
+  traits: { accel: 5, jump: 5, health: 100 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -65,6 +66,7 @@ const p1 = new Fighter({
       frames: 6, 
       idle: [0, 5]
     },
+    rate: 4, 
     offset: { x: 6, y: 6}, 
     scale: 4, 
     damage: 10, 
@@ -77,7 +79,7 @@ const p1 = new Fighter({
 });
 const p2 = new Fighter({
   position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
+  size: { width: 70, height: 75 },
   sprites: {
     src: 'img/red-sprites-flip.png',
     frames: 29,
@@ -89,18 +91,20 @@ const p2 = new Fighter({
     lowrun: [18, 23],
     attack: [24, 28]
   },
+  rate: 1, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 10 },
+  traits: { accel: 5, jump: 5, health: 100 },
   attackInfo: {
-    size: { width: 100, height: 50 },
+    size: { width: 50, height: 50 },
     sprites: {
       src: 'img/swipe-flip.png',
       frames: 6, 
       idle: [0, 5]
     },
-    offset: { x: 2, y: 5}, 
+    rate: 4, 
+    offset: { x: 6, y: 6}, 
     scale: 4, 
     damage: 10, 
     duration: 0.3, 
@@ -112,24 +116,22 @@ const p2 = new Fighter({
 });
 
 function collide(player, attack) {
-  return attack.x + attack.width >= player.position.x &&
-    attack.x <= player.position.x + player.width &&
-    attack.y +  attack.height > player.position.y &&
-    attack.y <= player.position.y + player.height
+  return attack.position.x + attack.width >= player.position.x &&
+    attack.position.x <= player.position.x + player.width &&
+    attack.position.y +  attack.height > player.position.y &&
+    attack.position.y <= player.position.y + player.height
 }
 
 function checkCombat() {
-  if (p1.attacking && collide(p2, p1.attack)) {
-    p1.attacking = false;
-    p2.takeHit();
+  if (p1.attack && collide(p2, p1.attack)) {
+    p2.takeHit(p1.attack.damage);
     document.getElementById('health-2').style.width = 
-      `${p2.health * 10}%`;
+      `${p2.health}%`;
   }
-  if (p2.attacking && collide(p1, p2.attack)) { 
-    p2.attacking = false;  
-    p1.takeHit();
+  if (p2.attack && collide(p1, p2.attack)) { 
+    p1.takeHit(p2.attack.damage);
     document.getElementById('health-1').style.width = 
-      `${p1.health * 10}%`;
+      `${p1.health}%`;
   } 
 }
 

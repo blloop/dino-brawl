@@ -1,10 +1,10 @@
 class Attack extends AnimatedSprite {
   constructor({
-    position, size, sprites, offset, scale,
+    position, size, sprites, rate, offset, scale,
     damage, speed, flip
   }) {
     super({ 
-      position, size, sprites, flip, offset, scale
+      position, size, sprites, rate, flip, offset, scale
     });
     this.damage = damage;
     this.speed = speed;
