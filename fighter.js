@@ -1,35 +1,19 @@
 class Fighter extends AnimatedSprite {
   constructor({
-    position, velocity, traits, flip, keySet,
-    size, sprites, offset, scale
+    position, size, sprites, offset, scale, 
+    velocity, traits, attackInfo, keySet, flip
   }) {
     super({ 
-      position, size, sprites, flip, offset, scale
+      position, size, sprites, offset, scale
     });
     this.velocity = velocity;
     this.traits = traits;
-    this.health = traits.health;
+    this.attackInfo = attackInfo;
     this.keySet = keySet;
+    this.flip = flip;
+    this.health = traits.health;
     this.canAttack = true;
-    this.attacking = false;
-    this.attack = {
-      x: this.position.x,
-      y: this.position.y,
-      width: 150,
-      height: 50
-    };
-  }
-  
-  draw() {
-    super.draw();
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    if (this.attacking) {
-      c.fillStyle = 'yellow';
-      c.fillRect(
-        this.attack.x, this.attack.y, 
-        this.attack.width, this.attack.height
-      );
-    }
+    this.attack = null;
   }
 
   takeHit() {
@@ -70,12 +54,27 @@ class Fighter extends AnimatedSprite {
     }
     // Attack data
     if (this.keySet.atk.pressed && this.canAttack) {
-      this.attack.x = this.position.x + (this.flip && -50);
-      this.attack.y = this.position.y;
-      this.attacking = true;
+      console.log('making attack!');
+      this.attack = new Attack({
+        position: { 
+          x: this.position.x + 
+            (this.width * (this.flip ? -1 : 1)),
+          y: this.position.y 
+        },
+        size: { 
+          width: this.attackInfo.size.width,
+          height: this.attackInfo.size.height
+        }, 
+        sprites: this.attackInfo.sprites,
+        offset: this.attackInfo.offset,
+        scale: this.attackInfo.scale,
+        damage: this.attackInfo.damage,
+        speed: this.attackInfo.speed,
+        flip: this.flip
+      });
       this.canAttack = false;
-      setTimeout(() => this.attacking = false, 100);
-      setTimeout(() => this.canAttack = true, 1000);
+      setTimeout(() => this.canAttack = true, 650);
+      setTimeout(() => this.attack = null, 100);
     }
     // Choose sprite based on state
     if (this.state === 'hit') {
@@ -83,6 +82,8 @@ class Fighter extends AnimatedSprite {
       if (this.idx === this.sprites.hit[1]) {
         this.sprite('idle');
       }
+    } else if (!this.canAttack) {
+      this.sprite('attack');
     } else if (this.velocity.y < 0) {
       this.sprite('jump');
     } else if (this.keySet.a.pressed || this.keySet.d.pressed) {
@@ -90,7 +91,7 @@ class Fighter extends AnimatedSprite {
     } else {
       this.sprite(this.keySet.s.pressed ? 'crouch' : 'idle');
     }
-    this.animate();
-    this.draw();
+    if (this.attack) this.attack.update();
+    super.update();
   }
 }

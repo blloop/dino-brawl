@@ -42,43 +42,73 @@ const bg = new Sprite({
 // Fighter class declarations
 const p1 = new Fighter({
   position: { x: 200, y: 0 },
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 10 },
-  flip: false,
-  keySet: keySet1,
   size: { width: 60, height: 75 },
   sprites: {
     src: 'img/red-sprites.png',
-    frames: 24,
+    frames: 29,
     idle: [0, 3], 
     run: [4, 9], 
     jump: [10, 13], 
     hit: [14, 16], 
     crouch: [17, 17],
-    lowrun: [18, 23]
+    lowrun: [18, 23],
+    attack: [24, 28]
   },
+  offset: { x: 6, y: 6 }, 
   scale: 5,
-  offset: { x: 6, y: 6 }
+  velocity: { x: 0, y: 0 },
+  traits: { accel: 5, jump: 5, health: 10 },
+  attackInfo: {
+    size: { width: 50, height: 50 },
+    sprites: {
+      src: 'img/swipe.png',
+      frames: 6, 
+      idle: [0, 5]
+    },
+    offset: { x: 6, y: 6}, 
+    scale: 4, 
+    damage: 10, 
+    duration: 0.3, 
+    speed: 0, 
+    flip: false,
+  },
+  keySet: keySet1,
+  flip: false
 });
 const p2 = new Fighter({
   position: { x: 700, y: 0 },
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 10 },
-  flip: true,
-  keySet: keySet2,
   size: { width: 60, height: 75 },
   sprites: {
     src: 'img/red-sprites-flip.png',
-    frames: 24,
+    frames: 29,
     idle: [0, 3], 
     run: [4, 9], 
     jump: [10, 13], 
     hit: [14, 16], 
     crouch: [17, 17],
-    lowrun: [18, 23]
+    lowrun: [18, 23],
+    attack: [24, 28]
   },
+  offset: { x: 6, y: 6 }, 
   scale: 5,
-  offset: { x: 6, y: 6 }
+  velocity: { x: 0, y: 0 },
+  traits: { accel: 5, jump: 5, health: 10 },
+  attackInfo: {
+    size: { width: 100, height: 50 },
+    sprites: {
+      src: 'img/swipe-flip.png',
+      frames: 6, 
+      idle: [0, 5]
+    },
+    offset: { x: 2, y: 5}, 
+    scale: 4, 
+    damage: 10, 
+    duration: 0.3, 
+    speed: 0, 
+    flip: true,
+  },
+  keySet: keySet2,
+  flip: true
 });
 
 function collide(player, attack) {

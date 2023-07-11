@@ -21,12 +21,11 @@ class Sprite {
 
 class AnimatedSprite extends Sprite {
   constructor({ 
-      position, size, sprites, flip = false, 
+      position, size, sprites, 
       offset = {x: 0, y: 0}, scale = 1
   }) {
     super({ position, size, source: sprites.src });
     this.sprites = sprites;
-    this.flip = flip;
     this.offset = offset;
     this.scale = scale;
 
