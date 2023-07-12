@@ -55,6 +55,10 @@ const p1 = new Fighter({
     run: {
       src: 'img/red-run.png',
       frames: 6
+    },
+    jump: {
+      src: 'img/red-jump.png',
+      frames: 4
     }
   },
   scale: 5,
@@ -70,6 +74,14 @@ const p2 = new Fighter({
   sprites: {
     idle: {
       src: 'img/red-idle.png',
+      frames: 4
+    },
+    run: {
+      src: 'img/red-run.png',
+      frames: 6
+    },
+    jump: {
+      src: 'img/red-jump.png',
       frames: 4
     }
   },

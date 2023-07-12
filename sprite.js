@@ -22,13 +22,14 @@ class Sprite {
 class AnimatedSprite extends Sprite {
   constructor({ 
       position, size, sprites, 
-      offset = {x: 0, y: 0}, scale = 1, frames = 1
-    }) {
+      offset = {x: 0, y: 0}, scale = 1
+  }) {
     super({ position, size, source: sprites.idle.src });
     this.sprites = sprites;
     this.offset = offset;
     this.scale = scale;
     this.frames = sprites.idle.frames;
+    this.state = 'idle';
     this.timeStamp = 0;
     this.idx = 0;
   }
@@ -46,11 +47,13 @@ class AnimatedSprite extends Sprite {
     );
   }
 
-  // Sprite actions: Idle, Run, Attack, ...
+  // Sprite actions: Idle, Run, Jump, Attack, ...
   sprite(name) {
+    if (this.state === name) return;
+    this.state = name;
+    this.idx = 0;
     this.image.src = this.sprites[name].src;
     this.frames = this.sprites[name].frames;
-    this.idx = this.idx % this.frames;
   }
 
   animate() {
