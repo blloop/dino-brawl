@@ -45,14 +45,15 @@ const p1 = new Fighter({
   size: { width: 70, height: 75 },
   sprites: {
     src: 'img/red-sprites.png',
-    frames: 29,
+    frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
     jump: [10, 13], 
     hit: [14, 16], 
     crouch: [17, 17],
     lowrun: [18, 23],
-    attack: [24, 28]
+    attack: [24, 28],
+    lowatt: [29, 33]
   },
   rate: 1, 
   offset: { x: 6, y: 6 }, 
@@ -81,15 +82,16 @@ const p2 = new Fighter({
   position: { x: 700, y: 0 },
   size: { width: 70, height: 75 },
   sprites: {
-    src: 'img/red-sprites-flip.png',
-    frames: 29,
+    src: 'img/green-sprites-flip.png',
+    frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
     jump: [10, 13], 
     hit: [14, 16], 
     crouch: [17, 17],
     lowrun: [18, 23],
-    attack: [24, 28]
+    attack: [24, 28],
+    lowatt: [29, 33]
   },
   rate: 1, 
   offset: { x: 6, y: 6 }, 

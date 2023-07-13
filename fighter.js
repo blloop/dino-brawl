@@ -88,7 +88,7 @@ class Fighter extends AnimatedSprite {
         this.sprite('idle');
       }
     } else if (!this.canAttack) {
-      this.sprite('attack');
+      this.sprite(this.keySet.s.pressed ? 'lowatt' : 'attack');
     } else if (this.velocity.y < 0) {
       this.sprite('jump');
     } else if (this.keySet.a.pressed || this.keySet.d.pressed) {
@@ -96,7 +96,7 @@ class Fighter extends AnimatedSprite {
     } else {
       this.sprite(this.keySet.s.pressed ? 'crouch' : 'idle');
     }
-    if (this.attack) this.attack.update();
     super.update();
+    if (this.attack) this.attack.update();
   }
 }

@@ -49,7 +49,6 @@ class AnimatedSprite extends Sprite {
     );
   }
 
-  // Sprite actions: Idle, Run, Jump, Attack, ...
   sprite(name) {
     if (this.state === name) return;
     this.state = name;
