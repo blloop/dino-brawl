@@ -26,7 +26,7 @@ class AnimatedSprite extends Sprite {
   }) {
     super({ position, size, source: sprites.src });
     this.sprites = sprites;
-    this.rate = 8 / rate; // Valid values: 1, 2, 4
+    this.rate = 32 / rate; // default rate: 4
     this.offset = offset;
     this.scale = scale;
 
@@ -53,7 +53,12 @@ class AnimatedSprite extends Sprite {
     if (this.state === name) return;
     this.state = name;
     this.idx = this.sprites[name][0];
-    this.timeStamp = 0;
+    if (
+      !(name === 'lowatt' && this.state === 'attack') && 
+      !(name === 'attack' && this.state === 'lowatt')
+    ) {
+        this.timeStamp = 0;
+    }
   }
 
   animate() {

@@ -77,9 +77,11 @@ class Fighter extends AnimatedSprite {
         speed: this.attackInfo.speed,
         flip: this.flip
       });
+      this.attack.hurt = true;
       this.canAttack = false;
       setTimeout(() => this.canAttack = true, 650);
-      setTimeout(() => this.attack = null, 150);
+      setTimeout(() => this.attack = null, 
+        30 * this.attackInfo.duration);
     }
     // Choose sprite based on state
     if (this.state === 'hit') {
@@ -97,6 +99,5 @@ class Fighter extends AnimatedSprite {
       this.sprite(this.keySet.s.pressed ? 'crouch' : 'idle');
     }
     super.update();
-    if (this.attack) this.attack.update();
   }
 }

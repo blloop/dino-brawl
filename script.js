@@ -1,4 +1,4 @@
-// Fruit Fight
+// Dino Brawl
 // A simple fighting game made with HTML Canvas
 // By Bill Yu @blloop
 
@@ -13,24 +13,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 // List of game constants
 const gravity = 0.5;
 
-// List of keyboard controls
-const keySet1 = {
-  w: { pressed: false},
-  a: { pressed: false},
-  s: { pressed: false},
-  d: { pressed: false},
-  atk: { pressed: false}
-};
-
-const keySet2 = {
-  w: { pressed: false},
-  a: { pressed: false},
-  s: { pressed: false},
-  d: { pressed: false},
-  atk: { pressed: false}
-};
-
-// Sprite class declarations
+// Background image
 const bg = new Sprite({
   position: { x: 0, y: 0 },
   size: { width: canvas.width, height: canvas.height },
@@ -40,84 +23,11 @@ const bg = new Sprite({
 })
 
 // Fighter class declarations
-const p1 = new Fighter({
-  position: { x: 200, y: 0 },
-  size: { width: 70, height: 75 },
-  sprites: {
-    src: 'img/red-sprites.png',
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
-  rate: 1, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
-  attackInfo: {
-    size: { width: 50, height: 50 },
-    sprites: {
-      src: 'img/swipe.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
-    rate: 4, 
-    offset: { x: 6, y: 6}, 
-    scale: 4, 
-    damage: 10, 
-    duration: 0.3, 
-    speed: 0, 
-    flip: false,
-  },
-  keySet: keySet1,
-  flip: false
-});
-const p2 = new Fighter({
-  position: { x: 700, y: 0 },
-  size: { width: 70, height: 75 },
-  sprites: {
-    src: 'img/green-sprites-flip.png',
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
-  rate: 1, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
-  attackInfo: {
-    size: { width: 50, height: 50 },
-    sprites: {
-      src: 'img/swipe-flip.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
-    rate: 4, 
-    offset: { x: 6, y: 6}, 
-    scale: 4, 
-    damage: 10, 
-    duration: 0.3, 
-    speed: 0, 
-    flip: true,
-  },
-  keySet: keySet2,
-  flip: true
-});
+const p1 = new Fighter(greenBase);
+const p2 = new Fighter(greenFlip);
 
 function collide(player, attack) {
+  if (!attack.hurt) return false;
   return attack.position.x + attack.width >= player.position.x &&
     attack.position.x <= player.position.x + player.width &&
     attack.position.y +  attack.height > player.position.y &&
@@ -127,11 +37,13 @@ function collide(player, attack) {
 function checkCombat() {
   if (p1.attack && collide(p2, p1.attack)) {
     p2.takeHit(p1.attack.damage);
+    p1.attack.hurt = false;
     document.getElementById('health-2').style.width = 
       `${p2.health}%`;
   }
   if (p2.attack && collide(p1, p2.attack)) { 
     p1.takeHit(p2.attack.damage);
+    p2.attack.hurt = false;
     document.getElementById('health-1').style.width = 
       `${p1.health}%`;
   } 
@@ -168,6 +80,8 @@ function loop() {
   bg.update();
   p1.update();
   p2.update();
+  if (p1.attack) p1.attack.update();
+  if (p2.attack) p2.attack.update();
 }
 
 loop();
