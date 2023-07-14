@@ -31,13 +31,13 @@ class Fighter extends AnimatedSprite {
 
   update() {
     // Horizontal velocity
-    if (this.keySet.a.pressed === this.keySet.d.pressed) {
+    if (keys[this.keySet.a] === keys[this.keySet.d]) {
       this.velocity.x = this.velocity.x / 1.2;
     }
-    if (this.keySet.a.pressed) {
+    if (keys[this.keySet.a]) {
       this.velocity.x -= this.accel / 5;
     }
-    if (this.keySet.d.pressed) {
+    if (keys[this.keySet.d]) {
       this.velocity.x += this.accel / 5;
     }
     if (this.velocity.x > this.accel * 1.5) {
@@ -51,7 +51,7 @@ class Fighter extends AnimatedSprite {
     if (this.position.y + this.height + 
       this.velocity.y >= canvas.height * 0.8) 
     {
-      if (this.keySet.w.pressed) {
+      if (keys[this.keySet.w]) {
         this.velocity.y = -2 * this.jump;
       } else {
         this.velocity.y = 0;
@@ -61,7 +61,7 @@ class Fighter extends AnimatedSprite {
       this.position.y += this.velocity.y;
     }
     // Attack data
-    if (this.keySet.atk.pressed && this.canAttack) {
+    if (keys[this.keySet.atk] && this.canAttack) {
       this.attacks[this.attIdx] = new Attack({
         position: { 
           x: this.position.x + (this.flip ? 
@@ -84,7 +84,6 @@ class Fighter extends AnimatedSprite {
         attIdx: this.attIdx,
         duration: 30 * this.attackInfo.duration
       });
-      console.log('constructing att with idx ' + this.attIdx);
       this.attacks[this.attIdx].create();
       this.attIdx = (this.attIdx + 1) % ATT_COUNT;
       this.canAttack = false;
@@ -97,13 +96,13 @@ class Fighter extends AnimatedSprite {
         this.sprite('idle');
       }
     } else if (!this.canAttack) {
-      this.sprite(this.keySet.s.pressed ? 'lowatt' : 'attack');
+      this.sprite(keys[this.keySet.s] ? 'lowatt' : 'attack');
     } else if (this.velocity.y < 0) {
       this.sprite('jump');
-    } else if (this.keySet.a.pressed || this.keySet.d.pressed) {
-      this.sprite(this.keySet.s.pressed ? 'lowrun' : 'run');
+    } else if (keys[this.keySet.a] || keys[this.keySet.d]) {
+      this.sprite(keys[this.keySet.s] ? 'lowrun' : 'run');
     } else {
-      this.sprite(this.keySet.s.pressed ? 'crouch' : 'idle');
+      this.sprite(keys[this.keySet.s] ? 'crouch' : 'idle');
     }
     super.update();
   }

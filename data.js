@@ -1,19 +1,26 @@
 // List of keyboard controls
+let keys = [];
+
 let keySet1 = {
-  w: { pressed: false},
-  a: { pressed: false},
-  s: { pressed: false},
-  d: { pressed: false},
-  atk: { pressed: false}
+  w: 'w',
+  a: 'a',
+  s: 's',
+  d: 'd',
+  atk: 'f',
 };
 
 let keySet2 = {
-  w: { pressed: false},
-  a: { pressed: false},
-  s: { pressed: false},
-  d: { pressed: false},
-  atk: { pressed: false}
+  w: 'i',
+  a: 'j',
+  s: 'k',
+  d: 'l',
+  atk: ';',
 };
+   
+keys[keySet1.a] = false;
+keys[keySet1.d] = false;
+keys[keySet2.a] = false;
+keys[keySet2.d] = false;
 
 // List of fighter types
 const redBase = {

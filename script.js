@@ -90,51 +90,9 @@ loop();
 updateTimer();
 
 window.addEventListener('keydown', (event) => {
-  switch (event.key) {
-    case 'w': 
-      keySet1.w.pressed = true; break;
-    case 'a': 
-      keySet1.a.pressed = true; break;
-    case 's': 
-      keySet1.s.pressed = true; break;
-    case 'd': 
-      keySet1.d.pressed = true; break;
-    case 'ArrowUp': 
-      keySet2.w.pressed = true; break;
-    case 'ArrowLeft': 
-      keySet2.a.pressed = true; break;
-    case 'ArrowDown': 
-      keySet2.s.pressed = true; break;
-    case 'ArrowRight': 
-      keySet2.d.pressed = true; break;
-    case 'f':
-      keySet1.atk.pressed = true; break;
-    case 'o':
-      keySet2.atk.pressed = true; break;
-  }
+  keys[event.key] = true;
 });
 
 window.addEventListener('keyup', (event) => {
-  switch (event.key) {
-    case 'w': 
-      keySet1.w.pressed = false; break;
-    case 'a': 
-      keySet1.a.pressed = false; break;
-    case 's': 
-      keySet1.s.pressed = false; break;
-    case 'd': 
-      keySet1.d.pressed = false; break;
-    case 'ArrowUp': 
-      keySet2.w.pressed = false; break;
-    case 'ArrowLeft': 
-      keySet2.a.pressed = false; break;
-    case 'ArrowDown': 
-      keySet2.s.pressed = false; break;
-    case 'ArrowRight': 
-      keySet2.d.pressed = false; break;    
-    case 'f':
-      keySet1.atk.pressed = false; break;
-    case 'o':
-      keySet2.atk.pressed = false; break;
-  }
+  keys[event.key] = false;
 });
