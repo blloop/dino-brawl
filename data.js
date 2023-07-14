@@ -1,5 +1,5 @@
 // List of keyboard controls
-const keySet1 = {
+let keySet1 = {
   w: { pressed: false},
   a: { pressed: false},
   s: { pressed: false},
@@ -7,7 +7,7 @@ const keySet1 = {
   atk: { pressed: false}
 };
 
-const keySet2 = {
+let keySet2 = {
   w: { pressed: false},
   a: { pressed: false},
   s: { pressed: false},
@@ -34,8 +34,7 @@ const redBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -43,13 +42,11 @@ const redBase = {
       frames: 6, 
       idle: [0, 5]
     },
-    rate: 16, 
+    rate: 8, 
     offset: { x: 8, y: 6}, 
     scale: 4, 
-    damage: 10, 
-    duration: 5, 
-    speed: 0, 
-    flip: false,
+    duration: 10, 
+    speed: 0
   },
   keySet: keySet1,
   flip: false
@@ -73,8 +70,7 @@ const redFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -85,10 +81,8 @@ const redFlip = {
     rate: 16, 
     offset: { x: 8, y: 6}, 
     scale: 4, 
-    damage: 10, 
-    duration: 5, 
-    speed: 0, 
-    flip: true,
+    duration: 10, 
+    speed: 0
   },
   keySet: keySet2,
   flip: true
@@ -112,8 +106,7 @@ const blueBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -124,10 +117,8 @@ const blueBase = {
     rate: 16, 
     offset: { x: 6, y: 6}, 
     scale: 4, 
-    damage: 10, 
     duration: 10, 
-    speed: 0, 
-    flip: false,
+    speed: 0
   },
   keySet: keySet1,
   flip: false
@@ -151,8 +142,7 @@ const blueFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -163,10 +153,8 @@ const blueFlip = {
     rate: 16, 
     offset: { x: 6, y: 6}, 
     scale: 4, 
-    damage: 10, 
     duration: 10, 
-    speed: 0, 
-    flip: true,
+    speed: 0
   },
   keySet: keySet2,
   flip: true
@@ -190,8 +178,7 @@ const greenBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -202,10 +189,8 @@ const greenBase = {
     rate: 16, 
     offset: { x: 6, y: 6}, 
     scale: 5, 
-    damage: 6, 
     duration: 10, 
-    speed: 3, 
-    flip: false
+    speed: 3
   },
   keySet: keySet1,
   flip: false
@@ -229,22 +214,19 @@ const greenFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
-    size: { width: 100, height: 50 },
+    size: { width: 50, height: 50 },
     sprites: {
       src: 'img/lick-flip.png',
       frames: 9, 
       idle: [0, 8]
     },
     rate: 16, 
-    offset: { x: 0, y: 4}, 
-    scale: 4, 
-    damage: 6, 
-    duration: 10, 
-    speed: 0, 
-    flip: true,
+    offset: { x: 6, y: 6}, 
+    scale: 5, 
+    duration: 30, 
+    speed: 8
   },
   keySet: keySet2,
   flip: true
@@ -268,8 +250,7 @@ const yellowBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -280,10 +261,8 @@ const yellowBase = {
     rate: 16, 
     offset: { x: 6, y: 6}, 
     scale: 4, 
-    damage: 10, 
     duration: 10, 
-    speed: 0, 
-    flip: false,
+    speed: 0
   },
   keySet: keySet1,
   flip: false
@@ -307,8 +286,7 @@ const yellowFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  velocity: { x: 0, y: 0 },
-  traits: { accel: 5, jump: 5, health: 100 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -319,10 +297,8 @@ const yellowFlip = {
     rate: 16, 
     offset: { x: 6, y: 6}, 
     scale: 4, 
-    damage: 10, 
     duration: 10, 
-    speed: 0, 
-    flip: true,
+    speed: 0
   },
   keySet: keySet2,
   flip: true

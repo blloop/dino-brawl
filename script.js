@@ -23,8 +23,10 @@ const bg = new Sprite({
 })
 
 // Fighter class declarations
-const p1 = new Fighter(greenBase);
-const p2 = new Fighter(greenFlip);
+let attacks1 = [];
+let attacks2 = [];
+const p1 = new Fighter(redBase, attacks1);
+const p2 = new Fighter(greenFlip, attacks2);
 
 function collide(player, attack) {
   if (!attack.hurt) return false;
@@ -36,13 +38,13 @@ function collide(player, attack) {
 
 function checkCombat() {
   if (p1.attack && collide(p2, p1.attack)) {
-    p2.takeHit(p1.attack.damage);
+    p2.takeHit(p1.damage);
     p1.attack.hurt = false;
     document.getElementById('health-2').style.width = 
       `${p2.health}%`;
   }
   if (p2.attack && collide(p1, p2.attack)) { 
-    p1.takeHit(p2.attack.damage);
+    p1.takeHit(p2.damage);
     p2.attack.hurt = false;
     document.getElementById('health-1').style.width = 
       `${p1.health}%`;
@@ -80,8 +82,8 @@ function loop() {
   bg.update();
   p1.update();
   p2.update();
-  if (p1.attack) p1.attack.update();
-  if (p2.attack) p2.attack.update();
+  attacks1.forEach((a) => a ? a.update() : void(0));
+  attacks2.forEach((a) => a ? a.update() : void(0));
 }
 
 loop();

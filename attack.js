@@ -1,13 +1,23 @@
 class Attack extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale,
-    damage, speed, flip
+    speed, flip, list, attIdx, duration
   }) {
     super({ 
-      position, size, sprites, rate, flip, offset, scale
+      position, size, sprites, rate, offset, scale
     });
-    this.damage = damage;
     this.speed = speed;
+    this.flip = flip;
+    this.list = list;
+    this.attIdx = attIdx;
+    this.duration = duration;
+    this.hurt = true;
+  }
+
+  create() {
+    setTimeout(() => this.list[this.attIdx] = null, 
+      this.duration
+    );
   }
 
   update() {

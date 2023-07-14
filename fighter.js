@@ -1,19 +1,25 @@
+const ATT_COUNT = 2;
+
 class Fighter extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale, 
-    velocity, traits, attackInfo, keySet, flip
-  }) {
+    traits, attackInfo, keySet, flip
+  }, attacks) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
-    this.velocity = velocity;
-    this.traits = traits;
+    this.jump = traits.jump;
+    this.health = traits.health;
+    this.accel = traits.accel;
+    this.damage = traits.damage;
     this.attackInfo = attackInfo;
     this.keySet = keySet;
     this.flip = flip;
-    this.health = traits.health;
+    this.attacks = attacks;
+
+    this.attIdx = 0;
     this.canAttack = true;
-    this.attack = null;
+    this.velocity = { x: 0, y: 0 };
   }
 
   takeHit(damage) {
@@ -29,16 +35,16 @@ class Fighter extends AnimatedSprite {
       this.velocity.x = this.velocity.x / 1.2;
     }
     if (this.keySet.a.pressed) {
-      this.velocity.x -= this.traits.accel / 5;
+      this.velocity.x -= this.accel / 5;
     }
     if (this.keySet.d.pressed) {
-      this.velocity.x += this.traits.accel / 5;
+      this.velocity.x += this.accel / 5;
     }
-    if (this.velocity.x > this.traits.accel * 1.5) {
-      this.velocity.x = this.traits.accel * 1.5
+    if (this.velocity.x > this.accel * 1.5) {
+      this.velocity.x = this.accel * 1.5
     }
-    if (this.velocity.x < this.traits.accel * -1.5) {
-      this.velocity.x = this.traits.accel * -1.5
+    if (this.velocity.x < this.accel * -1.5) {
+      this.velocity.x = this.accel * -1.5
     }
     this.position.x += this.velocity.x;
     // Vertical velocity
@@ -46,7 +52,7 @@ class Fighter extends AnimatedSprite {
       this.velocity.y >= canvas.height * 0.8) 
     {
       if (this.keySet.w.pressed) {
-        this.velocity.y = -2 * this.traits.jump;
+        this.velocity.y = -2 * this.jump;
       } else {
         this.velocity.y = 0;
       }
@@ -56,8 +62,7 @@ class Fighter extends AnimatedSprite {
     }
     // Attack data
     if (this.keySet.atk.pressed && this.canAttack) {
-      // TODO: Attack mechanic improve
-      this.attack = new Attack({
+      this.attacks[this.attIdx] = new Attack({
         position: { 
           x: this.position.x + (this.flip ? 
             this.attackInfo.size.width * -1 :
@@ -73,15 +78,17 @@ class Fighter extends AnimatedSprite {
         rate: this.attackInfo.rate,
         offset: this.attackInfo.offset,
         scale: this.attackInfo.scale,
-        damage: this.attackInfo.damage,
         speed: this.attackInfo.speed,
-        flip: this.flip
+        flip: this.flip,
+        list: this.attacks,
+        attIdx: this.attIdx,
+        duration: 30 * this.attackInfo.duration
       });
-      this.attack.hurt = true;
+      console.log('constructing att with idx ' + this.attIdx);
+      this.attacks[this.attIdx].create();
+      this.attIdx = (this.attIdx + 1) % ATT_COUNT;
       this.canAttack = false;
       setTimeout(() => this.canAttack = true, 650);
-      setTimeout(() => this.attack = null, 
-        30 * this.attackInfo.duration);
     }
     // Choose sprite based on state
     if (this.state === 'hit') {
