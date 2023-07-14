@@ -1,4 +1,7 @@
-const ATT_COUNT = 2;
+// Number of attacks supported in queue
+const ATT_COUNT = 3;
+// Crouch hitbox change
+const LOW_HEIGHT = 20;
 
 class Fighter extends AnimatedSprite {
   constructor({
@@ -16,6 +19,7 @@ class Fighter extends AnimatedSprite {
     this.keySet = keySet;
     this.flip = flip;
     this.attacks = attacks;
+    this.crouch = false;
 
     this.attIdx = 0;
     this.canAttack = true;
@@ -23,6 +27,7 @@ class Fighter extends AnimatedSprite {
   }
 
   takeHit(damage) {
+    console.log('taking ' + damage)
     if (this.state !== 'hit') {
       this.health = Math.max(this.health - damage, 0);
       this.sprite('hit');
@@ -60,6 +65,22 @@ class Fighter extends AnimatedSprite {
       this.velocity.y += gravity;
       this.position.y += this.velocity.y;
     }
+    // Crouching mechanic
+    if (this.crouch && !keys[this.keySet.s]) {
+      this.position.y -= LOW_HEIGHT;
+      this.height += LOW_HEIGHT;
+      this.offset.y -= LOW_HEIGHT / this.scale;
+      this.crouch = false;
+    }
+    if (!this.crouch && keys[this.keySet.s]) {
+      this.position.y += LOW_HEIGHT;
+      this.height -= LOW_HEIGHT;
+      this.offset.y += LOW_HEIGHT / this.scale;
+      this.crouch = true;
+    }
+    // this.position.y = this.setPosit + (keys[this.keySet.s] ? 30 : 0);
+    // this.height = this.setHeight - (keys[this.keySet.s] ? 30 : 0);
+    // this.offSet = this.setOffset - (keys[this.keySet.s] ? 4 : 0);
     // Attack data
     if (keys[this.keySet.atk] && this.canAttack) {
       this.attacks[this.attIdx] = new Attack({

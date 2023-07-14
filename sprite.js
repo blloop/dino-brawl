@@ -37,6 +37,7 @@ class AnimatedSprite extends Sprite {
   }
 
   draw() {
+    // Debug rectangle drawn
     c.fillRect(this.position.x, this.position.y, this.width, this.height)
     c.drawImage(this.image, 
       this.idx * (this.image.width / this.frames),

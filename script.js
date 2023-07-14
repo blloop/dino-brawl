@@ -27,7 +27,10 @@ let attacks1 = [];
 let attacks2 = [];
 const p1 = new Fighter(redBase, attacks1);
 const p2 = new Fighter(greenFlip, attacks2);
+console.log(p1.damage);
+console.log(p2.damage)
 
+// Function to check collision between player/attack
 function collide(player, attack) {
   if (!attack.hurt) return false;
   return attack.position.x + attack.width >= player.position.x &&
@@ -36,21 +39,27 @@ function collide(player, attack) {
     attack.position.y <= player.position.y + player.height
 }
 
+// Check for all possible collisions
 function checkCombat() {
-  if (p1.attack && collide(p2, p1.attack)) {
-    p2.takeHit(p1.damage);
-    p1.attack.hurt = false;
-    document.getElementById('health-2').style.width = 
-      `${p2.health}%`;
-  }
-  if (p2.attack && collide(p1, p2.attack)) { 
-    p1.takeHit(p2.damage);
-    p2.attack.hurt = false;
-    document.getElementById('health-1').style.width = 
-      `${p1.health}%`;
-  } 
+  attacks1.forEach((a) => {
+    if (a && collide(p2, a)) {
+      p2.takeHit(p1.damage);
+      a.hurt = false;
+      document.getElementById('health-2').style.width = 
+        `${p2.health}%`;
+    }
+  });
+  attacks2.forEach((a) => {
+    if (a && collide(p1, a)) {
+      p1.takeHit(p2.damage);
+      a.hurt = false;
+      document.getElementById('health-1').style.width = 
+        `${p1.health}%`;
+    }
+  });
 }
 
+// Announce that game has ended
 function endGame() {
   let text = document.getElementById('game-status');
   text.style.display = 'flex';
@@ -59,6 +68,7 @@ function endGame() {
       'P2 Wins!' : 'Tie Game.');
 }
 
+// In game timer
 let timer = 30;
 let gameTimer;
 function updateTimer() {
@@ -74,6 +84,7 @@ function updateTimer() {
   }  
 }
 
+// Event loop function
 function loop() {
   window.requestAnimationFrame(loop);
   c.fillStyle = 'black';

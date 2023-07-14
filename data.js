@@ -85,7 +85,7 @@ const redFlip = {
       frames: 6, 
       idle: [0, 5]
     },
-    rate: 16, 
+    rate: 8, 
     offset: { x: 8, y: 6}, 
     scale: 4, 
     duration: 10, 
@@ -185,7 +185,7 @@ const greenBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 7 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -193,10 +193,10 @@ const greenBase = {
       frames: 9, 
       idle: [0, 8]
     },
-    rate: 16, 
+    rate: 8, 
     offset: { x: 6, y: 6}, 
     scale: 5, 
-    duration: 10, 
+    duration: 20, 
     speed: 3
   },
   keySet: keySet1,
@@ -221,7 +221,7 @@ const greenFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 7 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -229,11 +229,11 @@ const greenFlip = {
       frames: 9, 
       idle: [0, 8]
     },
-    rate: 16, 
+    rate: 8, 
     offset: { x: 6, y: 6}, 
     scale: 5, 
-    duration: 30, 
-    speed: 8
+    duration: 20, 
+    speed: 3
   },
   keySet: keySet2,
   flip: true
