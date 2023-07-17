@@ -21,6 +21,9 @@ class Attack extends AnimatedSprite {
   }
 
   update() {
+    if (!this.hurt) {      
+      setTimeout(() => this.list[this.attIdx] = null, 200);
+    }
     this.position.x += this.speed * (this.flip ? -1 : 1);
     super.update();
   }

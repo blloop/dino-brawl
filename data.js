@@ -53,7 +53,8 @@ const redBase = {
     offset: { x: 8, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 9
   },
   keySet: keySet1,
   flip: false
@@ -89,7 +90,8 @@ const redFlip = {
     offset: { x: 8, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 9
   },
   keySet: keySet2,
   flip: true
@@ -125,7 +127,8 @@ const blueBase = {
     offset: { x: 6, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 10
   },
   keySet: keySet1,
   flip: false
@@ -161,7 +164,8 @@ const blueFlip = {
     offset: { x: 6, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 10
   },
   keySet: keySet2,
   flip: true
@@ -197,7 +201,8 @@ const greenBase = {
     offset: { x: 6, y: 6}, 
     scale: 5, 
     duration: 20, 
-    speed: 3
+    speed: 2,
+    cooldown: 8
   },
   keySet: keySet1,
   flip: false
@@ -233,7 +238,8 @@ const greenFlip = {
     offset: { x: 6, y: 6}, 
     scale: 5, 
     duration: 20, 
-    speed: 3
+    speed: 2,
+    cooldown: 8
   },
   keySet: keySet2,
   flip: true
@@ -269,7 +275,8 @@ const yellowBase = {
     offset: { x: 6, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 10
   },
   keySet: keySet1,
   flip: false
@@ -305,7 +312,8 @@ const yellowFlip = {
     offset: { x: 6, y: 6}, 
     scale: 4, 
     duration: 10, 
-    speed: 0
+    speed: 0,
+    cooldown: 10
   },
   keySet: keySet2,
   flip: true

@@ -22,12 +22,12 @@ class Fighter extends AnimatedSprite {
     this.crouch = false;
 
     this.attIdx = 0;
+    this.attacking = false;
     this.canAttack = true;
     this.velocity = { x: 0, y: 0 };
   }
 
   takeHit(damage) {
-    console.log('taking ' + damage)
     if (this.state !== 'hit') {
       this.health = Math.max(this.health - damage, 0);
       this.sprite('hit');
@@ -78,9 +78,6 @@ class Fighter extends AnimatedSprite {
       this.offset.y += LOW_HEIGHT / this.scale;
       this.crouch = true;
     }
-    // this.position.y = this.setPosit + (keys[this.keySet.s] ? 30 : 0);
-    // this.height = this.setHeight - (keys[this.keySet.s] ? 30 : 0);
-    // this.offSet = this.setOffset - (keys[this.keySet.s] ? 4 : 0);
     // Attack data
     if (keys[this.keySet.atk] && this.canAttack) {
       this.attacks[this.attIdx] = new Attack({
@@ -107,8 +104,12 @@ class Fighter extends AnimatedSprite {
       });
       this.attacks[this.attIdx].create();
       this.attIdx = (this.attIdx + 1) % ATT_COUNT;
+      this.attacking = true;
       this.canAttack = false;
-      setTimeout(() => this.canAttack = true, 650);
+      setTimeout(() => this.attacking = false, 100);
+      setTimeout(() => this.canAttack = true, 
+        65 * this.attackInfo.cooldown
+      );
     }
     // Choose sprite based on state
     if (this.state === 'hit') {
@@ -116,7 +117,7 @@ class Fighter extends AnimatedSprite {
       if (this.idx === this.sprites.hit[1]) {
         this.sprite('idle');
       }
-    } else if (!this.canAttack) {
+    } else if (this.attacking) {
       this.sprite(keys[this.keySet.s] ? 'lowatt' : 'attack');
     } else if (this.velocity.y < 0) {
       this.sprite('jump');

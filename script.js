@@ -27,8 +27,6 @@ let attacks1 = [];
 let attacks2 = [];
 const p1 = new Fighter(redBase, attacks1);
 const p2 = new Fighter(greenFlip, attacks2);
-console.log(p1.damage);
-console.log(p2.damage)
 
 // Function to check collision between player/attack
 function collide(player, attack) {
