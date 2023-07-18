@@ -25,8 +25,8 @@ const bg = new Sprite({
 // Fighter class declarations
 let attacks1 = [];
 let attacks2 = [];
-const p1 = new Fighter(redBase, attacks1);
-const p2 = new Fighter(greenFlip, attacks2);
+const p1 = new Fighter(blueBase, attacks1);
+const p2 = new Fighter(blueFlip, attacks2);
 
 // Function to check collision between player/attack
 function collide(player, attack) {
@@ -85,8 +85,6 @@ function updateTimer() {
 // Event loop function
 function loop() {
   window.requestAnimationFrame(loop);
-  c.fillStyle = 'black';
-  c.fillRect(0, 0, canvas.width, canvas.height);
   checkCombat();
   bg.update();
   p1.update();
