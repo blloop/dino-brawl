@@ -1,5 +1,5 @@
 // Number of attacks supported in queue
-const ATT_COUNT = 3;
+const ATT_COUNT = 6;
 // Crouch hitbox change
 const LOW_HEIGHT = 20;
 
@@ -108,7 +108,7 @@ class Fighter extends AnimatedSprite {
       this.canAttack = false;
       setTimeout(() => this.attacking = false, 100);
       setTimeout(() => this.canAttack = true, 
-        65 * this.attackInfo.cooldown
+        (50 * this.attackInfo.cooldown) + 100
       );
     }
     // Choose sprite based on state
