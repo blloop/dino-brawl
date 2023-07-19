@@ -2,81 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    html {
-      background-color: black;
-    }
-
-    canvas {
-      padding: 0;
-      margin: auto;
-      display: block;
-    }
-
-    .game-header {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-      padding: 0;
-      width: 960px;
-      height: 100px;
-    }
-
-    .bar {
-      width: 40%;
-      height: 30%;
-      background-color: red;
-    }
-
-    .bar div {
-      width: 100%;
-      height: 100%;
-      background-color: yellow;
-    }
-
-    .left {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    #timer {
-      display: flex;
-      width: 10%;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      background-color: blue;
-      color: white;
-    }
-
-    #game-status {
-      display: none;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      width: 960px;
-      height: 540px;
-      color: white;
-    }
-  </style>
+  <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+  <title> Dino Brawl </title>
 </head>
-<body>
-  <div class="game-header">
-    <div class="bar left">
-      <div id="health-1"></div>
-    </div>
-    <div id="timer"> 100 </div>
-    <div class="bar">
-      <div id="health-2"></div>
-    </div>
-  </div>
-  <div id="game-status"></div>
-
-  <canvas id="canvas"></canvas>
+<body style="background-color: black";>
+  <canvas 
+    id="canvas" 
+    style="margin: auto; display: block">
+  </canvas>
   <script src="sprite.js"></script>
   <script src="data.js"></script>
   <script src="attack.js"></script>

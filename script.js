@@ -25,8 +25,8 @@ const bg = new Sprite({
 // Fighter class declarations
 let attacks1 = [];
 let attacks2 = [];
-const p1 = new Fighter(blueBase, attacks1);
-const p2 = new Fighter(blueFlip, attacks2);
+const p1 = new Fighter(redBase, attacks1);
+const p2 = new Fighter(greenFlip, attacks2);
 
 // Function to check collision between player/attack
 function collide(player, attack) {
@@ -43,50 +43,72 @@ function checkCombat() {
     if (a && collide(p2, a)) {
       p2.takeHit(p1.damage);
       a.hurt = false;
-      document.getElementById('health-2').style.width = 
-        `${p2.health}%`;
+      // document.getElementById('health-2').style.width = 
+      //   `${p2.health}%`;
     }
   });
   attacks2.forEach((a) => {
     if (a && collide(p1, a)) {
       p1.takeHit(p2.damage);
       a.hurt = false;
-      document.getElementById('health-1').style.width = 
-        `${p1.health}%`;
+      // document.getElementById('health-1').style.width = 
+      //   `${p1.health}%`;
     }
   });
 }
 
 // Announce that game has ended
-function endGame() {
-  let text = document.getElementById('game-status');
-  text.style.display = 'flex';
-  text.innerHTML = p1.health > p2.health ?
-    'P1 Wins!' : (p2.health > p1.health ?
-      'P2 Wins!' : 'Tie Game.');
+let gameStatus = '';
+function checkGame() {
+  if (p1.health > 0 && p2.health > 0 && timer > 0) {
+    return;
+  }
+  gameStatus = p1.health > p2.health ?
+    'Player 1 Wins!' : (p2.health > p1.health ?
+      'Player 2 Wins!' : '   Tie Game   ');
+}
+
+// Box dimensions (X, Y, width, height)
+let box1 = [30, 40, 400, 30];
+let box2 = [530, 40, 400, 30];
+let box3 = [430, 10, 100, 100];
+function drawStatus() {
+  c.fillStyle = 'red';
+  c.fillRect(box1[0], box1[1], box1[2], box1[3]);
+  c.fillRect(box2[0], box2[1], box2[2], box2[3]);
+  c.fillStyle = 'green';
+  c.fillRect(box3[0], box3[1], box3[2], box3[3]);
+  if (gameStatus) {
+    c.fillRect(320, 145, 320, 80);
+  }
+  c.fillStyle = 'yellow';
+  c.fillRect(box1[0] + (4 * (100 - p1.health)), box1[1], box1[2] - (4 * (100 - p1.health)), box1[3]);
+  c.fillRect(box2[0], box2[1], box2[2] - ( 4 * (100 - p2.health)), box2[3]);
+  c.font = '40px Verdana';
+  c.fillStyle = 'white';
+  c.fillText(timer.toString().padStart(2, '0'), 455, 75);
+  if (gameStatus) {
+    c.fillText(gameStatus, 340, 200);
+  }
 }
 
 // In game timer
-let timer = 30;
+let timer = 31;
 let gameTimer;
 function updateTimer() {
-  if (p1.health == 0 || p2.health == 0) {
-    endGame();
-  }
   if (timer > 0) {
     gameTimer = setTimeout(updateTimer, 1000);
     timer -= 1;
-    document.getElementById('timer').innerText = timer;
-  } else {
-    endGame();
-  }  
+  }
 }
 
 // Event loop function
 function loop() {
   window.requestAnimationFrame(loop);
-  checkCombat();
   bg.update();
+  checkCombat();
+  checkGame();
+  drawStatus();
   p1.update();
   p2.update();
   attacks1.forEach((a) => a ? a.update() : void(0));
