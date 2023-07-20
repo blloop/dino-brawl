@@ -23,18 +23,20 @@ const bg = new Sprite({
 })
 
 // Fighter class declarations
-let attacks1 = [];
-let attacks2 = [];
-const p1 = new Fighter(redBase, attacks1);
-const p2 = new Fighter(greenFlip, attacks2);
+const attacks1 = []; // attack queue
+const attacks2 = [];
+let select1 = 0; // fighter number selection, 0-3
+let select2 = 0;
+let p1 = null; // declare as new Fighter, w/ attacks1
+let p2 = null; // declare as new Fighter, w/ attacks2
 
 // Function to check collision between player/attack
 function collide(player, attack) {
   if (!attack.hurt) return false;
-  return attack.position.x + attack.width >= player.position.x &&
+  return (attack.position.x + attack.width >= player.position.x &&
     attack.position.x <= player.position.x + player.width &&
     attack.position.y +  attack.height > player.position.y &&
-    attack.position.y <= player.position.y + player.height
+    attack.position.y <= player.position.y + player.height);
 }
 
 // Check for all possible collisions
@@ -60,9 +62,9 @@ function checkGame() {
     return;
   }
   timer = 0;
-  gameStatus = p1.health > p2.health ?
+  gameStatus = (p1.health > p2.health ?
     'Player 1 Wins!' : (p2.health > p1.health ?
-      'Player 2 Wins!' : '   Tie Game   ');
+      'Player 2 Wins!' : '   Tie Game   '));
 }
 
 // In game timer
@@ -79,12 +81,30 @@ function updateTimer() {
   }
 }
 
+// Character selection input
+function checkSelect() {
+  if (keys[keySet1.a]) {
+    select1 = Math.max(0, select1 - 1);
+  }
+  if (keys[keySet1.d]) {
+    select1 = Math.min(3, select1 + 1);
+  }
+  if (keys[keySet2.a]) {
+    select2 = Math.max(0, select2 - 1);
+  }
+  if (keys[keySet2.d]) {
+    select2 = Math.min(3, select2 + 1);
+  }
+}
+
+
 // Drawing box declarations
 let menu = 0;
-let box1 = [380, 280, 200, 80, false]; // Play button
-let box2 = [30, 40, 400, 30]; // p1 health bar
-let box3 = [530, 40, 400, 30]; // p2 health bar
-let box4 = [430, 10, 100, 100]; // timer
+let box1 = [370, 280, 200, 80, false]; // play button
+let box2 = [360, 360, 220, 80, false]; // start button
+let box3 = [30, 40, 400, 30]; // p1 health bar
+let box4 = [530, 40, 400, 30]; // p2 health bar
+let box5 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
@@ -92,11 +112,15 @@ function loop() {
     case 0: // Main menu
       drawMain(box1);
       break;
-    case 1: // Game
+    case 1: 
+      drawSelect(box2);
+      checkSelect();
+      break;
+    default: // Game
       bg.update();
       checkCombat();
       checkGame();
-      drawStatus(box2, box3, box4);
+      drawStatus(box3, box4, box5);
       p1.update();
       p2.update();
       attacks1.forEach((a) => a ? a.update() : void(0));
@@ -104,7 +128,6 @@ function loop() {
   }
   window.requestAnimationFrame(loop);
 }
-
 loop();
 
 // Event listeners for keyboard + mouse input
@@ -123,13 +146,20 @@ window.onmousemove = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (mX > box1[0] && mY > box1[1] && 
+  if (menu === 0 && mX > box1[0] && mY > box1[1] && 
     mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
     canvas.style.cursor = 'pointer';
     box1[4] = true;
-  } else {
+  } else if (menu === 0 ) {
     canvas.style.cursor = 'default';
     box1[4] = false;
+  } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
+    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+    canvas.style.cursor = 'pointer';
+    box2[4] = true;
+  } else if (menu === 1) {
+    canvas.style.cursor = 'pointer';
+    box2[4] = false;
   }
 }
 
@@ -137,10 +167,16 @@ window.onmouseup = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (mX > box1[0] && mY > box1[1] && 
+  if (menu === 0 && mX > box1[0] && mY > box1[1] && 
     mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
-    // Start game
+    // Switch to character selection screen
     menu = 1;
+  } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
+    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+    // Start the game!
+    menu = 2;
     startTimer(31);
+    p1 = new Fighter(fighters[select1], attacks1);
+    p2 = new Fighter(fighters[select2 + 4], attacks2);
   }
 }

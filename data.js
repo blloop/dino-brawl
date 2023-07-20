@@ -318,3 +318,8 @@ const yellowFlip = {
   keySet: keySet2,
   flip: true
 }
+
+const fighters = [
+  redBase, blueBase, greenBase, yellowBase, 
+  redFlip, blueFlip, greenFlip, yellowFlip
+];

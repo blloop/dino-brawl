@@ -14,8 +14,15 @@ function drawMain(b1) {
 }
 
 // Draw character selection screen
-function drawSelect() {
-  return;
+function drawSelect(b1) {
+  c.fillStyle = 'grey';
+  c.fillRect(0, 0, canvas.width, canvas.height);
+  c.fillStyle = b1[4] ? 'green' : 'lightgreen';
+  c.fillRect(b1[0], b1[1], b1[2], b1[3]);
+  c.fillStyle = 'black';
+  c.font = '40px Verdana';
+  c.fillText('START', b1[0] + 45, b1[1] + 55);
+  // c.fillText('DINO BRAWL', 340, 200);  
 }
 
 // Draw status bars (health, timer, result)
