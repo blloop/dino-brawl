@@ -82,18 +82,28 @@ function updateTimer() {
 }
 
 // Character selection input
+let change1 = true;
+let change2 = true;
 function checkSelect() {
-  if (keys[keySet1.a]) {
+  if (change1 && keys[keySet1.a]) {
     select1 = Math.max(0, select1 - 1);
+    change1 = false;
+    setTimeout(() => change1 = true, 100);
   }
-  if (keys[keySet1.d]) {
+  if (change1 && keys[keySet1.d]) {
     select1 = Math.min(3, select1 + 1);
+    change1 = false;
+    setTimeout(() => change1 = true, 100);
   }
-  if (keys[keySet2.a]) {
+  if (change2 && keys[keySet2.a]) {
     select2 = Math.max(0, select2 - 1);
+    change2 = false;
+    setTimeout(() => change2 = true, 100);
   }
-  if (keys[keySet2.d]) {
+  if (change2 && keys[keySet2.d]) {
     select2 = Math.min(3, select2 + 1);
+    change2 = false;
+    setTimeout(() => change2 = true, 100);
   }
 }
 
@@ -101,7 +111,7 @@ function checkSelect() {
 // Drawing box declarations
 let menu = 0;
 let box1 = [370, 280, 200, 80, false]; // play button
-let box2 = [360, 360, 220, 80, false]; // start button
+let box2 = [360, 380, 220, 80, false]; // start button
 let box3 = [30, 40, 400, 30]; // p1 health bar
 let box4 = [530, 40, 400, 30]; // p2 health bar
 let box5 = [430, 10, 100, 100]; // timer
