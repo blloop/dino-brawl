@@ -79,59 +79,24 @@ function updateTimer() {
   }
 }
 
-// Draw status bars (health, timer, result)
-// Box dimensions: [X, Y, width, height]
-let box1 = [30, 40, 400, 30]; // p1 health bar
-let box2 = [530, 40, 400, 30]; // p2 health bar
-let box3 = [430, 10, 100, 100]; // timer
-function drawStatus() {
-  c.fillStyle = 'red';
-  c.fillRect(box1[0], box1[1], box1[2], box1[3]);
-  c.fillRect(box2[0], box2[1], box2[2], box2[3]);
-  c.fillStyle = 'green';
-  c.fillRect(box3[0], box3[1], box3[2], box3[3]);
-  if (gameStatus) {
-    c.fillRect(320, 145, 320, 80);
-  }
-  c.fillStyle = 'yellow';
-  c.fillRect(box1[0] + (4 * (100 - p1.health)), box1[1], 
-    box1[2] - (4 * (100 - p1.health)), box1[3]
-  );
-  c.fillRect(box2[0], box2[1], box2[2] - ( 4 * (100 - p2.health)), box2[3]);
-  c.font = '40px Verdana';
-  c.fillStyle = 'white';
-  c.fillText(timer.toString().padStart(2, '0'), 455, 75);
-  if (gameStatus) {
-    c.fillText(gameStatus, 340, 200);
-  }
-}
-
-// Draw main menu
-// Box dimensions: [X, Y, width, height]
+// Drawing box declarations
 let menu = 0;
-let box4 = [380, 280, 200, 80, false]; // Play button
-function drawMenu() {
-  c.fillStyle = 'grey';
-  c.fillRect(0, 0, canvas.width, canvas.height);
-  c.fillStyle = box4[4] ? 'green' : 'lightgreen';
-  c.fillRect(box4[0], box4[1], box4[2], box4[3]);
-  c.fillStyle = 'black';
-  c.font = '40px Verdana';
-  c.fillText('PLAY', box4[0] + 45, box4[1] + 55);
-  c.fillText('DINO BRAWL', 340, 200);
-}
+let box1 = [380, 280, 200, 80, false]; // Play button
+let box2 = [30, 40, 400, 30]; // p1 health bar
+let box3 = [530, 40, 400, 30]; // p2 health bar
+let box4 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
   switch (menu) {
     case 0: // Main menu
-      drawMenu();
+      drawMain(box1);
       break;
     case 1: // Game
       bg.update();
       checkCombat();
       checkGame();
-      drawStatus();
+      drawStatus(box2, box3, box4);
       p1.update();
       p2.update();
       attacks1.forEach((a) => a ? a.update() : void(0));
@@ -158,13 +123,13 @@ window.onmousemove = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (mX > box4[0] && mY > box4[1] && 
-    mX < box4[0] + box4[2] && mY < box4[1] + box4[3]) {
+  if (mX > box1[0] && mY > box1[1] && 
+    mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
     canvas.style.cursor = 'pointer';
-    box4[4] = true;
+    box1[4] = true;
   } else {
     canvas.style.cursor = 'default';
-    box4[4] = false;
+    box1[4] = false;
   }
 }
 
@@ -172,8 +137,8 @@ window.onmouseup = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (mX > box4[0] && mY > box4[1] && 
-    mX < box4[0] + box4[2] && mY < box4[1] + box4[3]) {
+  if (mX > box1[0] && mY > box1[1] && 
+    mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
     // Start game
     menu = 1;
     startTimer(31);
