@@ -15,10 +15,10 @@ function drawMain(b1) {
 
 // Draw character selection screen
 const x1 = 120;
-const x2 = 520;
+const x2 = 540;
 const bY = 280;
 const bW = 40;
-const bB = 15;
+const bB = 12;
 function drawSelect(b1) {
   c.fillStyle = 'grey';
   c.fillRect(0, 0, canvas.width, canvas.height);
