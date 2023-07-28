@@ -22,12 +22,24 @@ keys[keySet1.d] = false;
 keys[keySet2.a] = false;
 keys[keySet2.d] = false;
 
+// List of fighter sprites
+const spriteList = [
+  './img/red-sprites.png',
+  './img/green-sprites.png',
+  './img/blue-sprites.png',
+  './img/yellow-sprites.png',
+  './img/red-sprites-flip.png',
+  './img/green-sprites-flip.png',
+  './img/blue-sprites-flip.png',
+  './img/yellow-sprites-flip.png',
+]
+
 // List of fighter types
 const redBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/red-sprites.png',
+    src: spriteList[0],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -41,7 +53,7 @@ const redBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
+  traits: { accel: 4, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -64,7 +76,7 @@ const redFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/red-sprites-flip.png',
+    src: spriteList[4],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -78,7 +90,7 @@ const redFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
+  traits: { accel: 4, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
@@ -97,85 +109,11 @@ const redFlip = {
   flip: true
 }
 
-const blueBase = {
-  position: { x: 200, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: {
-    src: './img/blue-sprites.png',
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
-  attackInfo: {
-    size: { width: 50, height: 20 },
-    sprites: {
-      src: './img/spit.png',
-      frames: 7, 
-      idle: [0, 6]
-    },
-    rate: 4, 
-    offset: { x: 6, y: 8}, 
-    scale: 3.5, 
-    duration: 30, 
-    speed: 4,
-    cooldown: 6
-  },
-  keySet: keySet1,
-  flip: false
-}
-
-const blueFlip = {
-  position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: {
-    src: './img/blue-sprites-flip.png',
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
-  attackInfo: {
-    size: { width: 50, height: 20 },
-    sprites: {
-      src: './img/spit-flip.png',
-      frames: 7, 
-      idle: [0, 6]
-    },
-    rate: 4, 
-    offset: { x: 4, y: 8}, 
-    scale: 3.5, 
-    duration: 30, 
-    speed: 4,
-    cooldown: 6
-  },
-  keySet: keySet2,
-  flip: true
-}
-
 const greenBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/green-sprites.png',
+    src: spriteList[1],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -212,7 +150,7 @@ const greenFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/green-sprites-flip.png',
+    src: spriteList[5],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -245,11 +183,11 @@ const greenFlip = {
   flip: true
 }
 
-const yellowBase = {
+const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/yellow-sprites.png',
+    src: spriteList[1],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -263,7 +201,81 @@ const yellowBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 4, jump: 5, health: 100, damage: 3 },
+  traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
+  attackInfo: {
+    size: { width: 50, height: 20 },
+    sprites: {
+      src: './img/spit.png',
+      frames: 7, 
+      idle: [0, 6]
+    },
+    rate: 4, 
+    offset: { x: 6, y: 8}, 
+    scale: 3.5, 
+    duration: 30, 
+    speed: 4,
+    cooldown: 6
+  },
+  keySet: keySet1,
+  flip: false
+}
+
+const blueFlip = {
+  position: { x: 700, y: 0 },
+  size: { width: 60, height: 75 },
+  sprites: {
+    src: spriteList[5],
+    frames: 34,
+    idle: [0, 3], 
+    run: [4, 9], 
+    jump: [10, 13], 
+    hit: [14, 16], 
+    crouch: [17, 17],
+    lowrun: [18, 23],
+    attack: [24, 28],
+    lowatt: [29, 33]
+  },
+  rate: 4, 
+  offset: { x: 6, y: 6 }, 
+  scale: 5,
+  traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
+  attackInfo: {
+    size: { width: 50, height: 20 },
+    sprites: {
+      src: './img/spit-flip.png',
+      frames: 7, 
+      idle: [0, 6]
+    },
+    rate: 4, 
+    offset: { x: 4, y: 8}, 
+    scale: 3.5, 
+    duration: 30, 
+    speed: 4,
+    cooldown: 6
+  },
+  keySet: keySet2,
+  flip: true
+}
+
+const yellowBase = {
+  position: { x: 200, y: 0 },
+  size: { width: 60, height: 75 },
+  sprites: {
+    src: spriteList[3],
+    frames: 34,
+    idle: [0, 3], 
+    run: [4, 9], 
+    jump: [10, 13], 
+    hit: [14, 16], 
+    crouch: [17, 17],
+    lowrun: [18, 23],
+    attack: [24, 28],
+    lowatt: [29, 33]
+  },
+  rate: 4, 
+  offset: { x: 6, y: 6 }, 
+  scale: 5,
+  traits: { accel: 5, jump: 5, health: 100, damage: 3 },
   attackInfo: {
     size: { width: 40, height: 15 },
     sprites: {
@@ -286,7 +298,7 @@ const yellowFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: './img/yellow-sprites-flip.png',
+    src: spriteList[7],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -300,7 +312,7 @@ const yellowFlip = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 4, jump: 5, health: 100, damage: 3 },
+  traits: { accel: 5, jump: 5, health: 100, damage: 3 },
   attackInfo: {
     size: { width: 40, height: 15 },
     sprites: {

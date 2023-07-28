@@ -82,32 +82,69 @@ function updateTimer() {
   }
 }
 
+// Character selection sprites
+let chosen1 = new AnimatedSprite({
+  position: {x: 220, y: 120},
+  size: {x: 120, y: 150},
+  sprites: {
+    src: './img/select-p1.png',
+    frames: 16,
+    idle: [0, 3],
+    0: [0, 3],
+    1: [4, 7],
+    2: [8, 11],
+    3: [12, 15]
+  },
+  rate: 4,
+  offset: { x: 6, y: 6 }, 
+  scale: 7
+});
+let chosen2 = new AnimatedSprite({
+  position: {x: 640, y: 120},
+  size: {x: 120, y: 150},
+  sprites: {
+    src: './img/select-p2.png',
+    frames: 16,
+    idle: [0, 3],
+    0: [0, 3],
+    1: [4, 7],
+    2: [8, 11],
+    3: [12, 15]
+  },
+  rate: 4,
+  offset: { x: 6, y: 6 }, 
+  scale: 7
+});
+
 // Character selection input
 let change1 = true;
 let change2 = true;
 function checkSelect() {
   if (change1 && keys[keySet1.a]) {
     select1 = Math.max(0, select1 - 1);
+    chosen1.sprite(select1);
     change1 = false;
-    setTimeout(() => change1 = true, 100);
+    setTimeout(() => change1 = true, 150);
   }
   if (change1 && keys[keySet1.d]) {
     select1 = Math.min(3, select1 + 1);
+    chosen1.sprite(select1);
     change1 = false;
-    setTimeout(() => change1 = true, 100);
+    setTimeout(() => change1 = true, 150);
   }
   if (change2 && keys[keySet2.a]) {
     select2 = Math.max(0, select2 - 1);
+    chosen2.sprite(select2);
     change2 = false;
-    setTimeout(() => change2 = true, 100);
+    setTimeout(() => change2 = true, 150);
   }
   if (change2 && keys[keySet2.d]) {
     select2 = Math.min(3, select2 + 1);
+    chosen2.sprite(select2);
     change2 = false;
-    setTimeout(() => change2 = true, 100);
+    setTimeout(() => change2 = true, 150);
   }
 }
-
 
 // Drawing box declarations
 let menu = 0;
@@ -123,9 +160,11 @@ function loop() {
     case 0: // Main menu
       drawMain(box1);
       break;
-    case 1: 
+    case 1:  // Character Select
       drawSelect(box2);
       checkSelect();
+      chosen1.update();
+      chosen2.update();
       break;
     default: // Game
       bg.update();
@@ -142,7 +181,6 @@ function loop() {
 loop();
 
 // Event listeners for keyboard + mouse input
-
 window.addEventListener('keydown', (event) => {
   keys[event.key] = true;
 });
