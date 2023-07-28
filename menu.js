@@ -18,7 +18,7 @@ const x1 = 120;
 const x2 = 520;
 const bY = 280;
 const bW = 40;
-const bB = 20;
+const bB = 15;
 function drawSelect(b1) {
   c.fillStyle = 'grey';
   c.fillRect(0, 0, canvas.width, canvas.height);

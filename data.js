@@ -27,7 +27,7 @@ const redBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/red-sprites.png',
+    src: './img/red-sprites.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -45,7 +45,7 @@ const redBase = {
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
-      src: 'img/swipe.png',
+      src: './img/swipe.png',
       frames: 6, 
       idle: [0, 5]
     },
@@ -64,7 +64,7 @@ const redFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/red-sprites-flip.png',
+    src: './img/red-sprites-flip.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -82,12 +82,12 @@ const redFlip = {
   attackInfo: {
     size: { width: 50, height: 50 },
     sprites: {
-      src: 'img/swipe-flip.png',
+      src: './img/swipe-flip.png',
       frames: 6, 
       idle: [0, 5]
     },
     rate: 8, 
-    offset: { x: 8, y: 6}, 
+    offset: { x: 3, y: 6}, 
     scale: 4, 
     duration: 10, 
     speed: 0,
@@ -101,7 +101,7 @@ const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/blue-sprites.png',
+    src: './img/blue-sprites.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -119,7 +119,7 @@ const blueBase = {
   attackInfo: {
     size: { width: 50, height: 20 },
     sprites: {
-      src: 'img/spit.png',
+      src: './img/spit.png',
       frames: 7, 
       idle: [0, 6]
     },
@@ -138,7 +138,7 @@ const blueFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/blue-sprites-flip.png',
+    src: './img/blue-sprites-flip.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -156,12 +156,12 @@ const blueFlip = {
   attackInfo: {
     size: { width: 50, height: 20 },
     sprites: {
-      src: 'img/spit-flip.png',
+      src: './img/spit-flip.png',
       frames: 7, 
       idle: [0, 6]
     },
     rate: 4, 
-    offset: { x: 6, y: 8}, 
+    offset: { x: 4, y: 8}, 
     scale: 3.5, 
     duration: 30, 
     speed: 4,
@@ -175,7 +175,7 @@ const greenBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/green-sprites.png',
+    src: './img/green-sprites.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -191,14 +191,14 @@ const greenBase = {
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
   attackInfo: {
-    size: { width: 50, height: 50 },
+    size: { width: 70, height: 40 },
     sprites: {
-      src: 'img/lick.png',
+      src: './img/lick.png',
       frames: 9, 
       idle: [0, 8]
     },
     rate: 8, 
-    offset: { x: 6, y: 6}, 
+    offset: { x: 5, y: 6}, 
     scale: 5, 
     duration: 20, 
     speed: 2,
@@ -212,7 +212,7 @@ const greenFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/green-sprites-flip.png',
+    src: './img/green-sprites-flip.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -228,14 +228,14 @@ const greenFlip = {
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
   attackInfo: {
-    size: { width: 50, height: 50 },
+    size: { width: 70, height: 40 },
     sprites: {
-      src: 'img/lick-flip.png',
+      src: './img/lick-flip.png',
       frames: 9, 
       idle: [0, 8]
     },
     rate: 8, 
-    offset: { x: 6, y: 6}, 
+    offset: { x: 5, y: 6}, 
     scale: 5, 
     duration: 20, 
     speed: 2,
@@ -249,7 +249,7 @@ const yellowBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/yellow-sprites.png',
+    src: './img/yellow-sprites.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -267,12 +267,12 @@ const yellowBase = {
   attackInfo: {
     size: { width: 40, height: 15 },
     sprites: {
-      src: 'img/fire.png',
+      src: './img/fire.png',
       frames: 6, 
       idle: [0, 5]
     },
     rate: 4, 
-    offset: { x: 6, y: 8}, 
+    offset: { x: 4, y: 8}, 
     scale: 2, 
     duration: 40, 
     speed: 6,
@@ -286,7 +286,7 @@ const yellowFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: 'img/yellow-sprites-flip.png',
+    src: './img/yellow-sprites-flip.png',
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -304,12 +304,12 @@ const yellowFlip = {
   attackInfo: {
     size: { width: 40, height: 15 },
     sprites: {
-      src: 'img/fire-flip.png',
+      src: './img/fire-flip.png',
       frames: 6, 
       idle: [0, 5]
     },
     rate: 4, 
-    offset: { x: 6, y: 8}, 
+    offset: { x: 2, y: 8}, 
     scale: 2, 
     duration: 40, 
     speed: 6,
@@ -320,6 +320,6 @@ const yellowFlip = {
 }
 
 const fighters = [
-  redBase, blueBase, greenBase, yellowBase, 
-  redFlip, blueFlip, greenFlip, yellowFlip
+  redBase, greenBase, blueBase, yellowBase, 
+  redFlip, greenFlip, blueFlip, yellowFlip
 ];

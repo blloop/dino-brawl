@@ -17,7 +17,7 @@ const gravity = 0.5;
 const bg = new Sprite({
   position: { x: 0, y: 0 },
   size: { width: canvas.width, height: canvas.height },
-  source: 'img/bg.png',
+  source: './img/bg.png',
   scale: 1,
   frames: 1,
 })
@@ -58,7 +58,8 @@ function checkCombat() {
 // Announce that game has ended
 let gameStatus = '';
 function checkGame() {
-  if (p1.health > 0 && p2.health > 0 && timer > 0) {
+  if (p1.health === 0 || p2.health === 0 ||
+    timer > 0 || gameStatus) {
     return;
   }
   timer = 0;
@@ -168,8 +169,10 @@ window.onmousemove = function(e) {
     canvas.style.cursor = 'pointer';
     box2[4] = true;
   } else if (menu === 1) {
-    canvas.style.cursor = 'pointer';
+    canvas.style.cursor = 'default';
     box2[4] = false;
+  } else {
+    canvas.style.cursor = 'default';
   }
 }
 
@@ -185,7 +188,7 @@ window.onmouseup = function(e) {
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     // Start the game!
     menu = 2;
-    startTimer(31);
+    startTimer(3);
     p1 = new Fighter(fighters[select1], attacks1);
     p2 = new Fighter(fighters[select2 + 4], attacks2);
   }
