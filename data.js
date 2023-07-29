@@ -10,11 +10,11 @@ let keySet1 = {
 };
 
 let keySet2 = {
-  w: 'i',
-  a: 'j',
-  s: 'k',
-  d: 'l',
-  atk: ';',
+  w: 'ArrowUp',
+  a: 'ArrowLeft',
+  s: 'ArrowDown',
+  d: 'ArrowRight',
+  atk: '/',
 };
    
 keys[keySet1.a] = false;
@@ -187,7 +187,7 @@ const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[1],
+    src: spriteList[2],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -224,7 +224,7 @@ const blueFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[5],
+    src: spriteList[6],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 

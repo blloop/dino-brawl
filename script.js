@@ -58,14 +58,20 @@ function checkCombat() {
 // Announce that game has ended
 let gameStatus = '';
 function checkGame() {
-  if (p1.health === 0 || p2.health === 0 ||
-    timer > 0 || gameStatus) {
-    return;
+  console.log(p1.health);
+  if (gameStatus) return;
+  if (p1.health === 0 || p2.health === 0 || timer === 0) {
+    timer = 0;
+    gameStatus = (p1.health > p2.health ?
+      'Player 1 Wins!' : (p2.health > p1.health ?
+        'Player 2 Wins!' : '   Tie Game   '));
+    setTimeout(() => {
+      menu = 1;
+      gameStatus = '';
+      fighters[select1].position = { x: 200, y: 0 };
+      fighters[select2 + 4].position = { x: 700, y: 0 };
+    }, 2000);
   }
-  timer = 0;
-  gameStatus = (p1.health > p2.health ?
-    'Player 1 Wins!' : (p2.health > p1.health ?
-      'Player 2 Wins!' : '   Tie Game   '));
 }
 
 // In game timer
@@ -226,8 +232,8 @@ window.onmouseup = function(e) {
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     // Start the game!
     menu = 2;
-    startTimer(3);
     p1 = new Fighter(fighters[select1], attacks1);
     p2 = new Fighter(fighters[select2 + 4], attacks2);
+    startTimer(30);
   }
 }
