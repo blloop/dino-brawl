@@ -29,6 +29,8 @@ let select1 = 0; // fighter number selection, 0-3
 let select2 = 0;
 let p1 = null; // declare as new Fighter, w/ attacks1
 let p2 = null; // declare as new Fighter, w/ attacks2
+let cameraX = 0;
+let cameraLimit = [-50, 50];
 
 // Function to check collision between player/attack
 function collide(player, attack) {
