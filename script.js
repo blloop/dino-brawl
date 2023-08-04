@@ -12,15 +12,25 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 // List of game constants
 const gravity = 0.5;
+const offlim = 150;
+let offset = 0;
 
 // Background image
-const bg = new Sprite({
+const bg = new Background({
   position: { x: 0, y: 0 },
-  size: { width: canvas.width, height: canvas.height },
-  source: './img/bg.png',
-  scale: 1,
-  frames: 1,
+  size: { width: 1260, height: 540 },
+  source: './img/bg.png'
 })
+
+function shiftBg(x) {
+  let old = offset;
+  offset += x;
+  offset = Math.min(offset, offlim);
+  offset = Math.max(offset, offlim * -1);
+  console.log(`offset from ${old} to ${offset}`);
+  p1.position.x += offset - old;
+  p2.position.x += offset - old;
+}
 
 // Fighter class declarations
 const attacks1 = []; // attack queue
@@ -60,7 +70,6 @@ function checkCombat() {
 // Announce that game has ended
 let gameStatus = '';
 function checkGame() {
-  console.log(p1.health);
   if (gameStatus) return;
   if (p1.health === 0 || p2.health === 0 || timer === 0) {
     timer = 0;
@@ -70,8 +79,6 @@ function checkGame() {
     setTimeout(() => {
       menu = 1;
       gameStatus = '';
-      fighters[select1].position = { x: 200, y: 0 };
-      fighters[select2 + 4].position = { x: 700, y: 0 };
     }, 2000);
   }
 }
@@ -164,6 +171,8 @@ let box5 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
+  if (keys['-']) shiftBg(-10);
+  if (keys['=']) shiftBg(10);
   switch (menu) {
     case 0: // Main menu
       drawMain(box1);

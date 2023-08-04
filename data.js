@@ -36,7 +36,7 @@ const spriteList = [
 
 // List of fighter names
 const fighterNames = [
-  chomper, slurper, spitter, kindler
+  'chomper', 'slurper', 'spitter', 'kindler'
 ];
 
 // List of fighter types

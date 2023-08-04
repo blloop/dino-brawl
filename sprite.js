@@ -1,7 +1,6 @@
 class Sprite {
   constructor({ 
-    position, size, source, 
-    offset = {x: 0, y: 0} 
+    position, size, source
   }) {
     this.position = { 
       x: position.x, y: position.y
@@ -10,14 +9,11 @@ class Sprite {
     this.height = size.height;
     this.image = new Image();
     this.image.src = source;
-    this.offset = { 
-      x: offset.x, y: offset.y
-    };
   }
 
   draw() {
     c.drawImage(this.image, 
-      this.position.x, this.position.y, 
+      this.position.x, this.position.y,
       this.width, this.height
     );
   }
@@ -27,16 +23,37 @@ class Sprite {
   }
 }
 
+class Background extends Sprite {
+  constructor({ 
+    position, size, source
+  }) {
+    super({
+      position, size, source
+    });
+  }
+
+  draw() {
+    c.drawImage(this.image, 
+      this.position.x - offset - offlim,
+      this.position.y,
+      this.width, this.height
+    );
+  }
+}
+
 class AnimatedSprite extends Sprite {
   constructor({ 
       position, size, sprites, rate,
       offset = {x: 0, y: 0}, scale = 1
   }) {
     super({ 
-      position, size, source: sprites.src, offset 
+      position, size, source: sprites.src 
     });
     this.sprites = sprites;
     this.rate = 32 / rate; // default rate: 4
+    this.offset = {
+      x: offset.x, y: offset.y
+    }
     this.scale = scale;
 
     this.frames = sprites.frames;
@@ -53,7 +70,7 @@ class AnimatedSprite extends Sprite {
       0, 
       this.image.width / this.frames,
       this.image.height,
-      this.position.x - (this.offset.x * this.scale),        
+      this.position.x - (this.offset.x * this.scale),     
       this.position.y - (this.offset.y * this.scale),
       (this.image.width / this.frames) * this.scale,
       this.image.height * this.scale
