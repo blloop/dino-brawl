@@ -34,6 +34,11 @@ const spriteList = [
   './img/yellow-sprites-flip.png',
 ]
 
+// List of fighter names
+const fighterNames = [
+  'chomper', 'slurper', 'spitter', 'kindler'
+];
+
 // List of fighter types
 const redBase = {
   position: { x: 200, y: 0 },

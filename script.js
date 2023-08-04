@@ -12,15 +12,40 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 // List of game constants
 const gravity = 0.5;
+const OFFLIM = 150;
+const OFFPAD = 50;
+let offset = 0;
 
 // Background image
-const bg = new Sprite({
+const bg = new Background({
   position: { x: 0, y: 0 },
-  size: { width: canvas.width, height: canvas.height },
-  source: './img/bg.png',
-  scale: 1,
-  frames: 1,
+  size: { width: 1260, height: 540 },
+  source: './img/bg.png'
 })
+
+function shiftBg(x, isOne) {
+  if (isOne && (
+    p2.position.x < OFFPAD ||
+    p2.position.x + p2.width > canvas.width - OFFPAD
+  )) {
+    return;
+  }
+  if (!isOne && (
+    p1.position.x < OFFPAD ||
+    p1.position.x + p1.width > canvas.width - OFFPAD
+  )) {
+    return;
+  }
+  let old = offset;
+  offset += x;
+  offset = Math.min(offset, OFFLIM);
+  offset = Math.max(offset, OFFLIM * -1);
+  if (isOne) {
+    p2.position.x -= offset - old;
+  } else {
+    p1.position.x -= offset - old;
+  }
+}
 
 // Fighter class declarations
 const attacks1 = []; // attack queue
@@ -29,6 +54,8 @@ let select1 = 0; // fighter number selection, 0-3
 let select2 = 0;
 let p1 = null; // declare as new Fighter, w/ attacks1
 let p2 = null; // declare as new Fighter, w/ attacks2
+let cameraX = 0;
+let cameraLimit = [-50, 50];
 
 // Function to check collision between player/attack
 function collide(player, attack) {
@@ -58,7 +85,6 @@ function checkCombat() {
 // Announce that game has ended
 let gameStatus = '';
 function checkGame() {
-  console.log(p1.health);
   if (gameStatus) return;
   if (p1.health === 0 || p2.health === 0 || timer === 0) {
     timer = 0;
@@ -68,8 +94,6 @@ function checkGame() {
     setTimeout(() => {
       menu = 1;
       gameStatus = '';
-      fighters[select1].position = { x: 200, y: 0 };
-      fighters[select2 + 4].position = { x: 700, y: 0 };
     }, 2000);
   }
 }
@@ -162,6 +186,8 @@ let box5 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
+  if (keys['-']) shiftBg(-10);
+  if (keys['=']) shiftBg(10);
   switch (menu) {
     case 0: // Main menu
       drawMain(box1);
