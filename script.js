@@ -22,14 +22,23 @@ const bg = new Background({
   source: './img/bg.png'
 })
 
-function shiftBg(x) {
+function shiftBg(x, isOne) {
+  if (p1.position.x < 50 || 
+    p2.position.x < 50 ||
+    p1.position.x + p1.width > canvas.width - 50 || 
+    p2.position.x + p2.width > canvas.width - 50
+  ) {
+    return;
+  }
   let old = offset;
   offset += x;
   offset = Math.min(offset, offlim);
   offset = Math.max(offset, offlim * -1);
-  console.log(`offset from ${old} to ${offset}`);
-  p1.position.x += offset - old;
-  p2.position.x += offset - old;
+  if (isOne) {
+    p1.position.x -= offset - old;
+  } else {
+    p2.position.x -= offset - old;
+  }
 }
 
 // Fighter class declarations
