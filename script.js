@@ -12,7 +12,8 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 // List of game constants
 const gravity = 0.5;
-const offlim = 150;
+const OFFLIM = 150;
+const OFFPAD = 50;
 let offset = 0;
 
 // Background image
@@ -23,21 +24,26 @@ const bg = new Background({
 })
 
 function shiftBg(x, isOne) {
-  if (p1.position.x < 50 || 
-    p2.position.x < 50 ||
-    p1.position.x + p1.width > canvas.width - 50 || 
-    p2.position.x + p2.width > canvas.width - 50
-  ) {
+  if (isOne && (
+    p2.position.x < OFFPAD ||
+    p2.position.x + p2.width > canvas.width - OFFPAD
+  )) {
+    return;
+  }
+  if (!isOne && (
+    p1.position.x < OFFPAD ||
+    p1.position.x + p1.width > canvas.width - OFFPAD
+  )) {
     return;
   }
   let old = offset;
   offset += x;
-  offset = Math.min(offset, offlim);
-  offset = Math.max(offset, offlim * -1);
+  offset = Math.min(offset, OFFLIM);
+  offset = Math.max(offset, OFFLIM * -1);
   if (isOne) {
-    p1.position.x -= offset - old;
-  } else {
     p2.position.x -= offset - old;
+  } else {
+    p1.position.x -= offset - old;
   }
 }
 

@@ -51,12 +51,13 @@ class Fighter extends AnimatedSprite {
     if (this.velocity.x < this.accel * -1.5) {
       this.velocity.x = this.accel * -1.5
     }
-    let newPos = this.position.x + this.velocity.x
-    if (newPos <= 50 || newPos + this.width >= canvas.width - 50) {
-      shiftBg(newPos - this.position.x, this.flip)
-    } else {
+    let newPos = this.position.x + this.velocity.x;
+    if (newPos > OFFPAD && newPos + this.width < canvas.width - OFFPAD) {
       this.position.x = newPos;
+    } else if (this.velocity.x != 0){
+      shiftBg(this.velocity.x, !this.flip);
     }
+
     // Vertical velocity
     if (this.position.y + this.height + 
       this.velocity.y >= canvas.height * 0.8) 

@@ -34,7 +34,7 @@ class Background extends Sprite {
 
   draw() {
     c.drawImage(this.image, 
-      this.position.x - offset - offlim,
+      this.position.x - offset - OFFLIM,
       this.position.y,
       this.width, this.height
     );
