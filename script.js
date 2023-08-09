@@ -149,13 +149,7 @@ function charSelect() {
 }
 
 // Map selection sprites
-const mapSprites = [
-  'img/bg1.png',
-  'img/bg2.png',
-  'img/bg3.png',
-  'img/bg4.png',
-]
-
+// TODO: add map preview instances
 
 // Map selection input
 let currMap = 0;
@@ -163,13 +157,13 @@ let changeMap = true;
 function mapSelect() {
   if (changeMap && (keys[keySet1.a] || keys[keySet2.a])) {
     currMap = Math.max(0, currMap - 1);
-    bg.sprite = mapSprites[currMap];
+    bg.source(mapSprites[currMap]);
     changeMap = false;
     setTimeout(() => changeMap = true, UILAG);
   }
   if (changeMap && (keys[keySet1.d] || keys[keySet2.d])) {
     currMap = Math.min(mapSprites.length - 1, currMap + 1);
-    bg.sprite = mapSprites[currMap];
+    bg.source(mapSprites[currMap]);
     changeMap = false;
     setTimeout(() => changeMap = true, UILAG);
   }
@@ -208,10 +202,11 @@ function updateTimer() {
 // Drawing box declarations
 let menu = 0;
 let box1 = [370, 280, 200, 80, false]; // play button
-let box2 = [360, 380, 220, 80, false]; // start button
-let box3 = [30, 40, 400, 30]; // p1 health bar
-let box4 = [530, 40, 400, 30]; // p2 health bar
-let box5 = [430, 10, 100, 100]; // timer
+let box2 = [380, 380, 180, 80, false]; // start button
+let box3 = [360, 380, 220, 80, false]; // start button
+let box4 = [30, 40, 400, 30]; // p1 health bar
+let box5 = [530, 40, 400, 30]; // p2 health bar
+let box6 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
@@ -228,15 +223,15 @@ function loop() {
       chosen2.update();
       break;
     case 2: // Map Select
-      drawMaps(box2);
+      drawMaps(box3);
       mapSelect();
-      // Add map previews to update
+      // TODO: Add map previews to update
       break;
     default: // Game
       bg.update();
       checkCombat();
       checkGame();
-      drawStatus(box3, box4, box5);
+      drawStatus(box4, box5, box6);
       p1.update();
       p2.update();
       attacks1.forEach((a) => a ? a.update() : void(0));
@@ -261,22 +256,39 @@ window.onmousemove = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (menu === 0 && mX > box1[0] && mY > box1[1] && 
-    mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
-    canvas.style.cursor = 'pointer';
-    box1[4] = true;
-  } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
-    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
-    canvas.style.cursor = 'pointer';
-    box2[4] = true;
-  } else if (menu === 2 && mX > box2[0] && mY > box2[1] && 
-    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
-    canvas.style.cursor = 'pointer';
-    box2[4] = true;
-  } else {
-    canvas.style.cursor = 'default';
-    box1[4] = false;
-    box2[4] = false;
+  switch (menu) {
+    case 0: 
+      if (mX > box1[0] && mY > box1[1] && 
+        mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
+        canvas.style.cursor = 'pointer';
+        box1[4] = true;
+      } else {
+        canvas.style.cursor = 'default';
+        box1[4] = false;
+      }
+      break;
+    case 1: 
+      if (mX > box2[0] && mY > box2[1] && 
+        mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+        canvas.style.cursor = 'pointer';
+        box2[4] = true;
+      } else {
+        canvas.style.cursor = 'default';
+        box2[4] = false;
+      }
+      break;
+    case 2: 
+      if (mX > box3[0] && mY > box3[1] && 
+        mX < box3[0] + box3[2] && mY < box3[1] + box3[3]) {
+        canvas.style.cursor = 'pointer';
+        box3[4] = true;
+      } else {
+        canvas.style.cursor = 'default';
+        box3[4] = false;
+      }
+      break;
+    default: 
+      canvas.style.cursor = 'default';
   }
 }
 
