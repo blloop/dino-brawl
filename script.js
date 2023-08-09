@@ -20,7 +20,7 @@ const UILAG = 150;
 const bg = new Background({
   position: { x: 0, y: 0 },
   size: { width: 1260, height: 540 },
-  source: './img/bg.png'
+  source: './img/bg1.png'
 })
 
 // Background expansion mechanic
@@ -161,14 +161,14 @@ const mapSprites = [
 let currMap = 0;
 let changeMap = true;
 function mapSelect() {
-  if (changeMap && (keys[keySet1.a]) || keys[ketSet2.a]) {
-    currMap = Math.max(0, currMap);
+  if (changeMap && (keys[keySet1.a] || keys[keySet2.a])) {
+    currMap = Math.max(0, currMap - 1);
     bg.sprite = mapSprites[currMap];
     changeMap = false;
     setTimeout(() => changeMap = true, UILAG);
   }
-  if (changeMap && (keys[keySet1.d]) || keys[ketSet2.d]) {
-    currMap = Math.min(mapSprites.length - 1, currMap);
+  if (changeMap && (keys[keySet1.d] || keys[keySet2.d])) {
+    currMap = Math.min(mapSprites.length - 1, currMap + 1);
     bg.sprite = mapSprites[currMap];
     changeMap = false;
     setTimeout(() => changeMap = true, UILAG);
@@ -222,10 +222,15 @@ function loop() {
       drawMain(box1);
       break;
     case 1:  // Character Select
-      drawSelect(box2);
+      drawChars(box2);
       charSelect();
       chosen1.update();
       chosen2.update();
+      break;
+    case 2: // Map Select
+      drawMaps(box2);
+      mapSelect();
+      // Add map previews to update
       break;
     default: // Game
       bg.update();
@@ -260,18 +265,18 @@ window.onmousemove = function(e) {
     mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
     canvas.style.cursor = 'pointer';
     box1[4] = true;
-  } else if (menu === 0 ) {
-    canvas.style.cursor = 'default';
-    box1[4] = false;
   } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     canvas.style.cursor = 'pointer';
     box2[4] = true;
-  } else if (menu === 1) {
-    canvas.style.cursor = 'default';
-    box2[4] = false;
+  } else if (menu === 2 && mX > box2[0] && mY > box2[1] && 
+    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+    canvas.style.cursor = 'pointer';
+    box2[4] = true;
   } else {
     canvas.style.cursor = 'default';
+    box1[4] = false;
+    box2[4] = false;
   }
 }
 
@@ -285,8 +290,11 @@ window.onmouseup = function(e) {
     menu = 1;
   } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
-    // Start the game!
     menu = 2;
+  } else if (menu === 2 && mX > box2[0] && mY > box2[1] && 
+    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+    // Start the game!
+    menu = 3;
     p1 = new Fighter(fighters[select1], attacks1);
     p2 = new Fighter(fighters[select2 + 4], attacks2);
     startTimer(30);

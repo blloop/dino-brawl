@@ -19,7 +19,7 @@ const x2 = 540;
 const bY = 280;
 const bW = 40;
 const bB = 12;
-function drawSelect(b1) {
+function drawChars(b1) {
   c.fillStyle = 'grey';
   c.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -48,6 +48,15 @@ function drawSelect(b1) {
   c.fillStyle = 'yellow';
   c.fillRect(x1 + (bW * 6), bY, bW, bW); 
   c.fillRect(x2 + (bW * 6), bY, bW, bW);  
+}
+
+// Draw map selection screen
+function drawMaps(b1) {
+  c.fillStyle = 'grey';
+  c.fillRect(0, 0, canvas.width, canvas.height);
+
+  c.fillStyle = b1[4] ? 'green' : 'lightgreen';
+  c.fillRect(b1[0], b1[1], b1[2], b1[3]);
 }
 
 // Draw status bars (health, timer, result)
