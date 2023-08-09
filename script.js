@@ -149,7 +149,26 @@ function charSelect() {
 }
 
 // Map selection sprites
-// TODO: add map preview instances
+const map1 = new Sprite({
+  position: { x: 40, y: 240 },
+  size: { width: 200, height: 100 },
+  source: mapSprites[0]
+})
+const map2 = new Sprite({
+  position: { x: 270, y: 240 },
+  size: { width: 200, height: 100 },
+  source: mapSprites[1]
+})
+const map3 = new Sprite({
+  position: { x: 500, y: 240 },
+  size: { width: 200, height: 100 },
+  source: mapSprites[2]
+})
+const map4 = new Sprite({
+  position: { x: 730, y: 240 },
+  size: { width: 200, height: 100 },
+  source: mapSprites[3]
+})
 
 // Map selection input
 let currMap = 0;
@@ -225,7 +244,10 @@ function loop() {
     case 2: // Map Select
       drawMaps(box3);
       mapSelect();
-      // TODO: Add map previews to update
+      map1.update();
+      map2.update();
+      map3.update();
+      map4.update();
       break;
     default: // Game
       bg.update();

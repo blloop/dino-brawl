@@ -29,7 +29,7 @@ function drawChars(b1) {
   c.font = '40px Verdana';
   c.fillText('NEXT', b1[0] + 35, b1[1] + 55);
   
-  // Fill in selected color
+  // Highlight selected color
   c.fillRect(x1 - bB + (bW * select1 * 2), bY - bB, 
   bW + (bB * 2), bW + (bB * 2));
   c.fillRect(x2 - bB + (bW * select2 * 2), bY - bB, 
@@ -60,6 +60,10 @@ function drawMaps(b1) {
   c.fillStyle = 'black';
   c.font = '40px Verdana';
   c.fillText('START', b1[0] + 45, b1[1] + 55);
+
+  // Highlight selected map
+  c.fillStyle = 'black';
+  c.fillRect(20 + (230 * currMap), 220, 240, 140)
 }
 
 // Draw status bars (health, timer, result)
