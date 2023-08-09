@@ -14,7 +14,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.5;
 const OFFLIM = 150;
 const OFFPAD = 50;
-let offset = 0;
+const UILAG = 150;
 
 // Background image
 const bg = new Background({
@@ -23,6 +23,8 @@ const bg = new Background({
   source: './img/bg.png'
 })
 
+// Background expansion mechanic
+let offset = 0;
 function shiftBg(x, isOne) {
   if (isOne && (
     p2.position.x < OFFPAD ||
@@ -82,36 +84,6 @@ function checkCombat() {
   });
 }
 
-// Announce that game has ended
-let gameStatus = '';
-function checkGame() {
-  if (gameStatus) return;
-  if (p1.health === 0 || p2.health === 0 || timer === 0) {
-    timer = 0;
-    gameStatus = (p1.health > p2.health ?
-      'Player 1 Wins!' : (p2.health > p1.health ?
-        'Player 2 Wins!' : '   Tie Game   '));
-    setTimeout(() => {
-      menu = 1;
-      gameStatus = '';
-    }, 2000);
-  }
-}
-
-// In game timer
-let timer;
-let gameTimer;
-function startTimer(count) {
-  timer = count;
-  updateTimer();
-}
-function updateTimer() {
-  if (timer > 0) {
-    gameTimer = setTimeout(updateTimer, 1000);
-    timer -= 1;
-  }
-}
-
 // Character selection sprites
 let chosen1 = new AnimatedSprite({
   position: {x: 220, y: 120},
@@ -149,30 +121,87 @@ let chosen2 = new AnimatedSprite({
 // Character selection input
 let change1 = true;
 let change2 = true;
-function checkSelect() {
+function charSelect() {
   if (change1 && keys[keySet1.a]) {
     select1 = Math.max(0, select1 - 1);
     chosen1.sprite(select1);
     change1 = false;
-    setTimeout(() => change1 = true, 150);
+    setTimeout(() => change1 = true, UILAG);
   }
   if (change1 && keys[keySet1.d]) {
     select1 = Math.min(3, select1 + 1);
     chosen1.sprite(select1);
     change1 = false;
-    setTimeout(() => change1 = true, 150);
+    setTimeout(() => change1 = true, UILAG);
   }
   if (change2 && keys[keySet2.a]) {
     select2 = Math.max(0, select2 - 1);
     chosen2.sprite(select2);
     change2 = false;
-    setTimeout(() => change2 = true, 150);
+    setTimeout(() => change2 = true, UILAG);
   }
   if (change2 && keys[keySet2.d]) {
     select2 = Math.min(3, select2 + 1);
     chosen2.sprite(select2);
     change2 = false;
-    setTimeout(() => change2 = true, 150);
+    setTimeout(() => change2 = true, UILAG);
+  }
+}
+
+// Map selection sprites
+const mapSprites = [
+  'img/bg1.png',
+  'img/bg2.png',
+  'img/bg3.png',
+  'img/bg4.png',
+]
+
+
+// Map selection input
+let currMap = 0;
+let changeMap = true;
+function mapSelect() {
+  if (changeMap && (keys[keySet1.a]) || keys[ketSet2.a]) {
+    currMap = Math.max(0, currMap);
+    bg.sprite = mapSprites[currMap];
+    changeMap = false;
+    setTimeout(() => changeMap = true, UILAG);
+  }
+  if (changeMap && (keys[keySet1.d]) || keys[ketSet2.d]) {
+    currMap = Math.min(mapSprites.length - 1, currMap);
+    bg.sprite = mapSprites[currMap];
+    changeMap = false;
+    setTimeout(() => changeMap = true, UILAG);
+  }
+}
+
+// Announce that game has ended
+let gameStatus = '';
+function checkGame() {
+  if (gameStatus) return;
+  if (p1.health === 0 || p2.health === 0 || timer === 0) {
+    timer = 0;
+    gameStatus = (p1.health > p2.health ?
+      'Player 1 Wins!' : (p2.health > p1.health ?
+        'Player 2 Wins!' : '   Tie Game   '));
+    setTimeout(() => {
+      menu = 1;
+      gameStatus = '';
+    }, 2000);
+  }
+}
+
+// In game timer
+let timer;
+let gameTimer;
+function startTimer(count) {
+  timer = count;
+  updateTimer();
+}
+function updateTimer() {
+  if (timer > 0) {
+    gameTimer = setTimeout(updateTimer, 1000);
+    timer -= 1;
   }
 }
 
@@ -194,7 +223,7 @@ function loop() {
       break;
     case 1:  // Character Select
       drawSelect(box2);
-      checkSelect();
+      charSelect();
       chosen1.update();
       chosen2.update();
       break;
