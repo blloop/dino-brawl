@@ -22,8 +22,8 @@ keys[keySet1.d] = false;
 keys[keySet2.a] = false;
 keys[keySet2.d] = false;
 
-// List of fighter sprites
-const spriteList = [
+// List of sprites
+const charSprites = [
   './img/red-sprites.png',
   './img/green-sprites.png',
   './img/blue-sprites.png',
@@ -32,6 +32,12 @@ const spriteList = [
   './img/green-sprites-flip.png',
   './img/blue-sprites-flip.png',
   './img/yellow-sprites-flip.png',
+]
+const mapSprites = [
+  './img/bg1.png',
+  './img/bg2.png',
+  './img/bg3.png',
+  './img/bg4.png',
 ]
 
 // List of fighter names
@@ -44,7 +50,7 @@ const redBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[0],
+    src: charSprites[0],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -81,7 +87,7 @@ const redFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[4],
+    src: charSprites[4],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -118,7 +124,7 @@ const greenBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[1],
+    src: charSprites[1],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -155,7 +161,7 @@ const greenFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[5],
+    src: charSprites[5],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -192,7 +198,7 @@ const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[2],
+    src: charSprites[2],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -229,7 +235,7 @@ const blueFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[6],
+    src: charSprites[6],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -266,7 +272,7 @@ const yellowBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[3],
+    src: charSprites[3],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
@@ -303,7 +309,7 @@ const yellowFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
   sprites: {
-    src: spriteList[7],
+    src: charSprites[7],
     frames: 34,
     idle: [0, 3], 
     run: [4, 9], 
