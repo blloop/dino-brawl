@@ -82,6 +82,13 @@ function checkCombat() {
       a.hurt = false;
     }
   });
+  // TODO: Add collision to push players apart
+}
+
+// Ensure that players are facing each other
+function checkFlip() {
+  p1.flip = p1.position.x > p2.position.x;
+  p2.flip = p2.position.x > p1.position.x;
 }
 
 // Character selection sprites
@@ -256,6 +263,7 @@ function loop() {
       drawStatus(box4, box5, box6);
       p1.update();
       p2.update();
+      checkFlip();
       attacks1.forEach((a) => a ? a.update() : void(0));
       attacks2.forEach((a) => a ? a.update() : void(0)); 
   }

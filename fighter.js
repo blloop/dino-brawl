@@ -55,7 +55,7 @@ class Fighter extends AnimatedSprite {
     if (newPos > OFFPAD && newPos + this.width < canvas.width - OFFPAD) {
       this.position.x = newPos;
     } else if (this.velocity.x != 0){
-      shiftBg(this.velocity.x, !this.flip);
+      shiftBg(this.velocity.x, this.position.x == 0);
     }
 
     // Vertical velocity
@@ -86,6 +86,7 @@ class Fighter extends AnimatedSprite {
     }
     // Attack data
     if (keys[this.keySet.atk] && this.canAttack) {
+      console.log(this.flip)
       this.attacks[this.attIdx] = new Attack({
         position: { 
           x: this.position.x + (this.flip ? 
@@ -132,6 +133,8 @@ class Fighter extends AnimatedSprite {
     } else {
       this.sprite(keys[this.keySet.s] ? 'crouch' : 'idle');
     }
-    super.update();
+    super.animate();
+    // if (this.flip) c.scale(-1, 1);
+    super.draw();
   }
 }

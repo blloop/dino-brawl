@@ -55,16 +55,6 @@ function makeFrames(idx) {
     lowatt: [29, 33]
   });  
 }
-const charFrames = {
-  idle: [0, 3],
-  run: [4, 9], 
-  jump: [10, 13], 
-  hit: [14, 16], 
-  crouch: [17, 17],
-  lowrun: [18, 23],
-  attack: [24, 28],
-  lowatt: [29, 33]
-};
 
 // List of fighter names
 const fighterNames = [
@@ -87,15 +77,14 @@ const redBase = {
       frames: 6, 
       idle: [0, 5]
     },
-    rate: 8, 
+    rate: 16, 
     offset: { x: 8, y: 6}, 
     scale: 4, 
-    duration: 10, 
+    duration: 5, 
     speed: 0,
-    cooldown: 10
+    cooldown: 12
   },
-  keySet: keySet1,
-  flip: false
+  keySet: keySet1
 }
 
 const redFlip = {
@@ -113,15 +102,14 @@ const redFlip = {
       frames: 6, 
       idle: [0, 5]
     },
-    rate: 8, 
+    rate: 16, 
     offset: { x: 3, y: 6}, 
     scale: 4, 
-    duration: 10, 
+    duration: 5, 
     speed: 0,
-    cooldown: 10
+    cooldown: 12
   },
-  keySet: keySet2,
-  flip: true
+  keySet: keySet2
 }
 
 const greenBase = {
@@ -146,8 +134,7 @@ const greenBase = {
     speed: 2,
     cooldown: 8
   },
-  keySet: keySet1,
-  flip: false
+  keySet: keySet1
 }
 
 const greenFlip = {
@@ -172,8 +159,7 @@ const greenFlip = {
     speed: 2,
     cooldown: 8
   },
-  keySet: keySet2,
-  flip: true
+  keySet: keySet2
 }
 
 const blueBase = {
@@ -198,8 +184,7 @@ const blueBase = {
     speed: 4,
     cooldown: 6
   },
-  keySet: keySet1,
-  flip: false
+  keySet: keySet1
 }
 
 const blueFlip = {
@@ -224,8 +209,7 @@ const blueFlip = {
     speed: 4,
     cooldown: 6
   },
-  keySet: keySet2,
-  flip: true
+  keySet: keySet2
 }
 
 const yellowBase = {
@@ -250,8 +234,7 @@ const yellowBase = {
     speed: 6,
     cooldown: 4
   },
-  keySet: keySet1,
-  flip: false
+  keySet: keySet1
 }
 
 const yellowFlip = {
@@ -276,8 +259,7 @@ const yellowFlip = {
     speed: 6,
     cooldown: 4
   },
-  keySet: keySet2,
-  flip: true
+  keySet: keySet2
 }
 
 const fighters = [
