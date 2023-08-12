@@ -32,13 +32,39 @@ const charSprites = [
   './img/green-sprites-flip.png',
   './img/blue-sprites-flip.png',
   './img/yellow-sprites-flip.png',
-]
+];
 const mapSprites = [
   './img/bg1.png',
   './img/bg2.png',
   './img/bg3.png',
   './img/bg4.png',
-]
+];
+
+// Create frame data
+function makeFrames(idx) {
+  return ({
+    src: charSprites[idx],
+    frames: 34,
+    idle: [0, 3], 
+    run: [4, 9], 
+    jump: [10, 13], 
+    hit: [14, 16], 
+    crouch: [17, 17],
+    lowrun: [18, 23],
+    attack: [24, 28],
+    lowatt: [29, 33]
+  });  
+}
+const charFrames = {
+  idle: [0, 3],
+  run: [4, 9], 
+  jump: [10, 13], 
+  hit: [14, 16], 
+  crouch: [17, 17],
+  lowrun: [18, 23],
+  attack: [24, 28],
+  lowatt: [29, 33]
+};
 
 // List of fighter names
 const fighterNames = [
@@ -49,18 +75,7 @@ const fighterNames = [
 const redBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[0],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(0),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -86,18 +101,7 @@ const redBase = {
 const redFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[4],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(4),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -123,18 +127,7 @@ const redFlip = {
 const greenBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[1],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(1),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -160,18 +153,7 @@ const greenBase = {
 const greenFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[5],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(5),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -197,18 +179,7 @@ const greenFlip = {
 const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[2],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(2),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -234,18 +205,7 @@ const blueBase = {
 const blueFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[6],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(6),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -271,18 +231,7 @@ const blueFlip = {
 const yellowBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[3],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(3),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
@@ -308,18 +257,7 @@ const yellowBase = {
 const yellowFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: {
-    src: charSprites[7],
-    frames: 34,
-    idle: [0, 3], 
-    run: [4, 9], 
-    jump: [10, 13], 
-    hit: [14, 16], 
-    crouch: [17, 17],
-    lowrun: [18, 23],
-    attack: [24, 28],
-    lowatt: [29, 33]
-  },
+  sprites: makeFrames(7),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
