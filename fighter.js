@@ -6,8 +6,8 @@ const LOW_HEIGHT = 20;
 class Fighter extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale, 
-    traits, attackInfo, keySet, flip
-  }, attacks) {
+    traits, attackInfo, keySet
+  }, attacks, id) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
@@ -17,18 +17,27 @@ class Fighter extends AnimatedSprite {
     this.damage = traits.damage;
     this.attackInfo = attackInfo;
     this.keySet = keySet;
-    this.flip = flip;
     this.attacks = attacks;
-    this.crouch = false;
+    this.id = id;
 
+    this.crouch = false;
     this.attIdx = 0;
     this.attacking = false;
     this.canAttack = true;
     this.velocity = { x: 0, y: 0 };
   }
 
+  draw() {
+    // Draw player tag above player
+    c.fillStyle = 'black';
+    c.font = '24px Verdana';
+    c.fillText(this.id, this.position.x + 10, this.position.y - 20);
+
+    // Draw sprite using parent method
+    super.draw();
+  }
+
   setSprites(src) {
-    console.log(`switch from ${this.sprites.src} to ${src}`)
     this.image.src = src;
   }
 
@@ -91,7 +100,6 @@ class Fighter extends AnimatedSprite {
     }
     // Attack data
     if (keys[this.keySet.atk] && this.canAttack) {
-      console.log(this.flip)
       this.attacks[this.attIdx] = new Attack({
         position: { 
           x: this.position.x + (this.flip ? 
@@ -138,6 +146,7 @@ class Fighter extends AnimatedSprite {
     } else {
       this.sprite(keys[this.keySet.s] ? 'crouch' : 'idle');
     }
-    super.update();
+    super.animate();
+    this.draw();
   }
 }

@@ -59,41 +59,45 @@ let p2 = null; // declare as new Fighter, w/ attacks2
 let cameraX = 0;
 let cameraLimit = [-50, 50];
 
-// Function to check collision between player/attack
-function collide(player, attack) {
-  if (!attack.hurt) return false;
-  return (attack.position.x + attack.width >= player.position.x &&
-    attack.position.x <= player.position.x + player.width &&
-    attack.position.y +  attack.height > player.position.y &&
-    attack.position.y <= player.position.y + player.height);
+// Function to check collision between two objects
+function collide(a, b) {
+  return (b.position.x + b.width >= a.position.x &&
+    b.position.x <= a.position.x + a.width &&
+    b.position.y +  b.height > a.position.y &&
+    b.position.y <= a.position.y + a.height);
 }
 
 // Check for all possible collisions
 function checkCombat() {
   attacks1.forEach((a) => {
-    if (a && collide(p2, a)) {
+    if (a && a.hurt && collide(p2, a)) {
       p2.takeHit(p1.damage);
       a.hurt = false;
     }
   });
   attacks2.forEach((a) => {
-    if (a && collide(p1, a)) {
+    if (a && a.hurt && collide(p1, a)) {
       p1.takeHit(p2.damage);
       a.hurt = false;
     }
   });
-  // TODO: Add collision to push players apart
+  if (collide(p1, p2)) {
+    p1.position.x += (
+      p1.position.x < p2.position.x ? -10 : 10
+    );
+    p2.position.x += (
+      p1.position.x < p2.position.x ? 10 : -10
+    );
+  }
 }
 
 // Ensure that players are facing each other
 function checkFlip() {
   if (p1.flip != (p1.position.x > p2.position.x)) {
-    console.log('p1 sel is ' + select1);
     p1.flip = !p1.flip;
     p1.setSprites(charSprites[select1 + (p1.flip ? 4 : 0)]);
   }
   if (p2.flip != (p2.position.x > p1.position.x)) {
-    console.log('p2 sel is ' + select2);
     p2.flip = !p2.flip;
     p2.setSprites(charSprites[select2 + (p2.flip ? 4 : 0)]);
   }
@@ -345,8 +349,8 @@ window.onmouseup = function(e) {
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     // Start the game!
     menu = 3;
-    p1 = new Fighter(fighters[select1], attacks1);
-    p2 = new Fighter(fighters[select2 + 4], attacks2);
+    p1 = new Fighter(fighters[select1], attacks1, 'P1');
+    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2');
     startTimer(30);
   }
 }
