@@ -87,8 +87,16 @@ function checkCombat() {
 
 // Ensure that players are facing each other
 function checkFlip() {
-  p1.flip = p1.position.x > p2.position.x;
-  p2.flip = p2.position.x > p1.position.x;
+  if (p1.flip != (p1.position.x > p2.position.x)) {
+    console.log('p1 sel is ' + select1);
+    p1.flip = !p1.flip;
+    p1.setSprites(charSprites[select1 + (p1.flip ? 4 : 0)]);
+  }
+  if (p2.flip != (p2.position.x > p1.position.x)) {
+    console.log('p2 sel is ' + select2);
+    p2.flip = !p2.flip;
+    p2.setSprites(charSprites[select2 + (p2.flip ? 4 : 0)]);
+  }
 }
 
 // Character selection sprites
