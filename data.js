@@ -6,15 +6,14 @@ let keySet1 = {
   a: 'a',
   s: 's',
   d: 'd',
-  atk: 'f',
+  atk: 'f'
 };
-
 let keySet2 = {
   w: 'ArrowUp',
   a: 'ArrowLeft',
   s: 'ArrowDown',
   d: 'ArrowRight',
-  atk: '/',
+  atk: '/'
 };
    
 keys[keySet1.a] = false;
@@ -31,16 +30,26 @@ const charSprites = [
   './img/red-sprites-flip.png',
   './img/green-sprites-flip.png',
   './img/blue-sprites-flip.png',
-  './img/yellow-sprites-flip.png',
+  './img/yellow-sprites-flip.png'
+];
+const attSprites = [
+  './img/swipe.png',
+  './img/lick.png',
+  './img/spit.png',
+  './img/fire.png',
+  './img/swipe-flip.png',
+  './img/lick-flip.png',
+  './img/spit-flip.png',
+  './img/fire-flip.png'
 ];
 const mapSprites = [
   './img/bg1.png',
   './img/bg2.png',
   './img/bg3.png',
-  './img/bg4.png',
+  './img/bg4.png'
 ];
 
-// Create frame data
+// Create frame data from template
 function makeFrames(idx) {
   return ({
     src: charSprites[idx],

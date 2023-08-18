@@ -7,7 +7,7 @@ class Fighter extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale, 
     traits, attackInfo, keySet
-  }, attacks, id, opp) {
+  }, attacks, id, opp, num) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
@@ -20,6 +20,7 @@ class Fighter extends AnimatedSprite {
     this.attacks = attacks;
     this.id = id;
     this.opp = opp;
+    this.num = num;
 
     this.crouch = false;
     this.attIdx = 0;
@@ -36,10 +37,6 @@ class Fighter extends AnimatedSprite {
 
     // Draw sprite using parent method
     super.draw();
-  }
-
-  setSprites(src) {
-    this.image.src = src;
   }
 
   takeHit(damage) {
@@ -65,8 +62,7 @@ class Fighter extends AnimatedSprite {
     }
 
     this.position.x += this.velocity.x;
-    if (this.position.x < OFFPAD || 
-      this.position.x + this.width > canvas.width - OFFPAD ||
+    if (this.position.x + this.width > canvas.width - OFFPAD ||
       collide(this, this.opp)
     ) {
       this.position.x -= this.velocity.x;
@@ -126,6 +122,9 @@ class Fighter extends AnimatedSprite {
         attIdx: this.attIdx,
         duration: 30 * this.attackInfo.duration
       });
+      this.attacks[this.attIdx].setSprites(
+        attSprites[this.num + (this.flip ? 4 : 0)]
+      ),
       this.attacks[this.attIdx].create();
       this.attIdx = (this.attIdx + 1) % ATT_COUNT;
       this.attacking = true;

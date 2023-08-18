@@ -79,6 +79,10 @@ class AnimatedSprite extends Sprite {
     );
   }
 
+  setSprites(src) {
+    this.image.src = src;
+  }
+
   sprite(name) {
     if (this.state === name) return;
     this.state = name;

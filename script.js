@@ -342,8 +342,8 @@ window.onmouseup = function(e) {
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     // Start the game!
     menu = 3;
-    p1 = new Fighter(fighters[select1], attacks1, 'P1', null);
-    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1);
+    p1 = new Fighter(fighters[select1], attacks1, 'P1', null, select1);
+    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1, select2);
     p1.opp = p2;
     startTimer(30);
   }
