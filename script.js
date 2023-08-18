@@ -14,6 +14,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.5;
 const OFFLIM = 150;
 const OFFPAD = 50;
+const PUSH = 10;
 const UILAG = 150;
 
 // Background image
@@ -81,14 +82,6 @@ function checkCombat() {
       a.hurt = false;
     }
   });
-  if (collide(p1, p2)) {
-    p1.position.x += (
-      p1.position.x < p2.position.x ? -10 : 10
-    );
-    p2.position.x += (
-      p1.position.x < p2.position.x ? 10 : -10
-    );
-  }
 }
 
 // Ensure that players are facing each other
@@ -349,8 +342,9 @@ window.onmouseup = function(e) {
     mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
     // Start the game!
     menu = 3;
-    p1 = new Fighter(fighters[select1], attacks1, 'P1');
-    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2');
+    p1 = new Fighter(fighters[select1], attacks1, 'P1', null);
+    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1);
+    p1.opp = p2;
     startTimer(30);
   }
 }

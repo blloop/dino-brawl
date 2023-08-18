@@ -7,7 +7,7 @@ class Fighter extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale, 
     traits, attackInfo, keySet
-  }, attacks, id) {
+  }, attacks, id, opp) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
@@ -19,6 +19,7 @@ class Fighter extends AnimatedSprite {
     this.keySet = keySet;
     this.attacks = attacks;
     this.id = id;
+    this.opp = opp;
 
     this.crouch = false;
     this.attIdx = 0;
@@ -31,7 +32,7 @@ class Fighter extends AnimatedSprite {
     // Draw player tag above player
     c.fillStyle = 'black';
     c.font = '24px Verdana';
-    c.fillText(this.id, this.position.x + 10, this.position.y - 20);
+    c.fillText(this.id, this.position.x + 15, this.position.y - 20);
 
     // Draw sprite using parent method
     super.draw();
@@ -52,24 +53,23 @@ class Fighter extends AnimatedSprite {
     // Horizontal velocity
     if (keys[this.keySet.a] === keys[this.keySet.d]) {
       this.velocity.x = this.velocity.x / 1.2;
-    }
-    if (keys[this.keySet.a]) {
+    } else if (keys[this.keySet.a]) {
       this.velocity.x -= this.accel / 5;
-    }
-    if (keys[this.keySet.d]) {
+    } else if (keys[this.keySet.d]) {
       this.velocity.x += this.accel / 5;
     }
     if (this.velocity.x > this.accel * 1.5) {
       this.velocity.x = this.accel * 1.5
-    }
-    if (this.velocity.x < this.accel * -1.5) {
+    } else if (this.velocity.x < this.accel * -1.5) {
       this.velocity.x = this.accel * -1.5
     }
-    let newPos = this.position.x + this.velocity.x;
-    if (newPos > OFFPAD && newPos + this.width < canvas.width - OFFPAD) {
-      this.position.x = newPos;
-    } else if (this.velocity.x != 0){
-      shiftBg(this.velocity.x, !this.flip);
+
+    this.position.x += this.velocity.x;
+    if (this.position.x < OFFPAD || 
+      this.position.x + this.width > canvas.width - OFFPAD ||
+      collide(this, this.opp)
+    ) {
+      this.position.x -= this.velocity.x;
     }
 
     // Vertical velocity
@@ -84,6 +84,10 @@ class Fighter extends AnimatedSprite {
     } else {
       this.velocity.y += gravity;
       this.position.y += this.velocity.y;
+      if (collide(this, this.opp)) {
+        this.position.y -= this.velocity.y;
+        this.velocity.y = 0;
+      }
     }
     // Crouching mechanic
     if (this.crouch && !keys[this.keySet.s]) {
