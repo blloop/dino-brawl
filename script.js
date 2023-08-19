@@ -116,53 +116,57 @@ let chosen2 = new AnimatedSprite({
 let change1 = true;
 let change2 = true;
 function charSelect() {
-  if (change1 && keys[keySet1.a]) {
-    select1 = Math.max(0, select1 - 1);
-    chosen1.sprite(select1);
-    change1 = false;
-    setTimeout(() => change1 = true, UILAG);
+  if (change1) {
+    if (keys[keySet1.a]) {
+      select1 = Math.max(0, select1 - 1);
+      chosen1.sprite(select1);
+      change1 = false;
+      setTimeout(() => change1 = true, UILAG);
+    } else if (keys[keySet1.d]) {
+      select1 = Math.min(3, select1 + 1);
+      chosen1.sprite(select1);
+      change1 = false;
+      setTimeout(() => change1 = true, UILAG);
+    }
   }
-  if (change1 && keys[keySet1.d]) {
-    select1 = Math.min(3, select1 + 1);
-    chosen1.sprite(select1);
-    change1 = false;
-    setTimeout(() => change1 = true, UILAG);
-  }
-  if (change2 && keys[keySet2.a]) {
-    select2 = Math.max(0, select2 - 1);
-    chosen2.sprite(select2);
-    change2 = false;
-    setTimeout(() => change2 = true, UILAG);
-  }
-  if (change2 && keys[keySet2.d]) {
-    select2 = Math.min(3, select2 + 1);
-    chosen2.sprite(select2);
-    change2 = false;
-    setTimeout(() => change2 = true, UILAG);
-  }
+  if (change2) {
+    if (keys[keySet2.a]) {
+      select2 = Math.max(0, select2 - 1);
+      chosen2.sprite(select2);
+      change2 = false;
+      setTimeout(() => change2 = true, UILAG);
+    } else if (keys[keySet2.d]) {
+      select2 = Math.min(3, select2 + 1);
+      chosen2.sprite(select2);
+      change2 = false;
+      setTimeout(() => change2 = true, UILAG);
+    }
+  }  
 }
 
 // Map selection sprites
-const map1 = new Sprite({
-  position: { x: 40, y: 240 },
-  size: { width: 200, height: 100 },
-  source: mapSprites[0]
-})
-const map2 = new Sprite({
-  position: { x: 270, y: 240 },
-  size: { width: 200, height: 100 },
-  source: mapSprites[1]
-})
-const map3 = new Sprite({
-  position: { x: 500, y: 240 },
-  size: { width: 200, height: 100 },
-  source: mapSprites[2]
-})
-const map4 = new Sprite({
-  position: { x: 730, y: 240 },
-  size: { width: 200, height: 100 },
-  source: mapSprites[3]
-})
+const maps = [
+  new Sprite({
+    position: { x: 40, y: 240 },
+    size: { width: 200, height: 100 },
+    source: mapSprites[0]
+  }), 
+  new Sprite({
+    position: { x: 270, y: 240 },
+    size: { width: 200, height: 100 },
+    source: mapSprites[1]
+  }),
+  new Sprite({
+    position: { x: 500, y: 240 },
+    size: { width: 200, height: 100 },
+    source: mapSprites[2]
+  }),
+  new Sprite({
+    position: { x: 730, y: 240 },
+    size: { width: 200, height: 100 },
+    source: mapSprites[3]
+  })
+];
 
 // Map selection input
 let currMap = 0;
@@ -212,9 +216,18 @@ function updateTimer() {
   }
 }
 
+// Game start declarations
+function startGame() {
+  p1 = new Fighter(fighters[select1], attacks1, 'P1', null, select1);
+  p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1, select2);
+  p1.opp = p2;
+  startTimer(30);
+  offset = 0;
+}
+
 // Drawing box declarations
 let menu = 0;
-let box1 = [370, 280, 200, 80, false]; // play button
+let box1 = [370, 280, 200, 80, false]; // brawl button
 let box2 = [380, 380, 180, 80, false]; // start button
 let box3 = [360, 380, 220, 80, false]; // start button
 let box4 = [30, 40, 400, 30]; // p1 health bar
@@ -238,10 +251,7 @@ function loop() {
     case 2: // Map Select
       drawMaps(box3);
       mapSelect();
-      map1.update();
-      map2.update();
-      map3.update();
-      map4.update();
+      maps.forEach(m => m.update());
       break;
     default: // Game
       bg.update();
@@ -267,6 +277,13 @@ window.addEventListener('keyup', (event) => {
   keys[event.key] = false;
 });
 
+// Check for mouse collision
+function cursorOn(x, y, box) {
+  return (x > box[0] && y > box[1] && 
+    x < box[0] + box[2] && y < box[1] + box[3]
+  );
+}
+
 // Canvas relative mouse position: 
 // https://stackoverflow.com/questions/17130395
 window.onmousemove = function(e) {
@@ -275,8 +292,7 @@ window.onmousemove = function(e) {
   let mY = e.pageY - rect.top;
   switch (menu) {
     case 0: 
-      if (mX > box1[0] && mY > box1[1] && 
-        mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
+      if (cursorOn(mX, mY, box1)) {
         canvas.style.cursor = 'pointer';
         box1[4] = true;
       } else {
@@ -285,8 +301,7 @@ window.onmousemove = function(e) {
       }
       break;
     case 1: 
-      if (mX > box2[0] && mY > box2[1] && 
-        mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+      if (cursorOn(mX, mY, box2)) {
         canvas.style.cursor = 'pointer';
         box2[4] = true;
       } else {
@@ -295,8 +310,7 @@ window.onmousemove = function(e) {
       }
       break;
     case 2: 
-      if (mX > box3[0] && mY > box3[1] && 
-        mX < box3[0] + box3[2] && mY < box3[1] + box3[3]) {
+      if (cursorOn(mX, mY, box3)) {
         canvas.style.cursor = 'pointer';
         box3[4] = true;
       } else {
@@ -313,20 +327,14 @@ window.onmouseup = function(e) {
   let rect = canvas.getBoundingClientRect();
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
-  if (menu === 0 && mX > box1[0] && mY > box1[1] && 
-    mX < box1[0] + box1[2] && mY < box1[1] + box1[3]) {
+  if (menu === 0 && cursorOn(mX, mY, box1)) {
     // Switch to character selection screen
     menu = 1;
-  } else if (menu === 1 && mX > box2[0] && mY > box2[1] && 
-    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
+  } else if (menu === 1 && cursorOn(mX, mY, box2)) {
+    // Switch to stage selection screen
     menu = 2;
-  } else if (menu === 2 && mX > box2[0] && mY > box2[1] && 
-    mX < box2[0] + box2[2] && mY < box2[1] + box2[3]) {
-    // Start the game!
+  } else if (menu === 2 && cursorOn(mX, mY, box3)) {
+    startGame();
     menu = 3;
-    p1 = new Fighter(fighters[select1], attacks1, 'P1', null, select1);
-    p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1, select2);
-    p1.opp = p2;
-    startTimer(30);
   }
 }
