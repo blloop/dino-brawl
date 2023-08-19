@@ -22,6 +22,12 @@ keys[keySet2.a] = false;
 keys[keySet2.d] = false;
 
 // List of sprites
+const mapSprites = [
+  './stages/bg1.png',
+  './stages/bg2.png',
+  './stages/bg3.png',
+  './stages/bg4.png'
+];
 const charSprites = [
   './sprites/red-sprites.png',
   './sprites/green-sprites.png',
@@ -42,15 +48,18 @@ const attSprites = [
   './attacks/spit-flip.png',
   './attacks/fire-flip.png'
 ];
-const attCounts = [
-  6, 6, 9, 9, 7, 7, 6, 6
-]
-const mapSprites = [
-  './stages/bg1.png',
-  './stages/bg2.png',
-  './stages/bg3.png',
-  './stages/bg4.png'
-];
+const attData = { // [red, green, blue, yellow]
+  width: [50, 70, 50, 40],
+  height: [50, 70, 20, 15],
+  count: [6, 9, 7, 6],
+  rate: [16, 8, 4, 4],
+  offsetX: [5, 5, 5, 2],
+  offsetY: [5, 6, 8, 8],
+  scale: [4, 5, 3.5, 2],
+  duration: [5, 20, 30, 40], 
+  speed: [0, 2, 4, 6],
+  cooldown: [12, 8, 6, 4]
+}
 
 // Create char sprites from template
 function makeChars(idx) {
@@ -68,12 +77,27 @@ function makeChars(idx) {
   });  
 }
 
-// Create attack sprites from template
+// Create attack info from template
 function makeAttacks(idx) {
   return ({
-    src: attSprites[idx],
-    frames: attCounts[idx],
-    idle: [0, attCounts[idx] - 1]
+    size: { 
+      width: attData.width[idx], 
+      height: attData.height[idx]
+    },
+    sprites: {
+      src: attSprites[idx],
+      frames: attData.count[idx],
+      idle: [0, attData.count[idx] - 1]
+    },
+    rate: attData.rate[idx],
+    offset: {
+      x: attData.offsetX[idx],
+      y: attData.offsetY[idx]
+    }, 
+    scale: attData.scale[idx],
+    duration: attData.duration[idx],
+    speed: attData.speed[idx],
+    cooldown: attData.cooldown[idx],
   })
 }
 
@@ -84,174 +108,45 @@ const fighterNames = [
 
 // List of fighter types
 const redBase = {
-  position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: makeChars(0),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 4, jump: 5, health: 100, damage: 10 },
-  attackInfo: {
-    size: { width: 50, height: 50 },
-    sprites: makeAttacks(0),
-    rate: 16, 
-    offset: { x: 8, y: 6}, 
-    scale: 4, 
-    duration: 5, 
-    speed: 0,
-    cooldown: 12
-  },
-  keySet: keySet1
-}
-
-const redFlip = {
-  position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: makeChars(4),
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 4, jump: 5, health: 100, damage: 10 },
-  attackInfo: {
-    size: { width: 50, height: 50 },
-    sprites: makeAttacks(1),
-    rate: 16, 
-    offset: { x: 3, y: 6}, 
-    scale: 4, 
-    duration: 5, 
-    speed: 0,
-    cooldown: 12
-  },
-  keySet: keySet2
-}
+  traits: { accel: 5, jump: 5, health: 100, damage: 10 },
+  attackInfo: makeAttacks(0),
+};
 
 const greenBase = {
-  position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: makeChars(1),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
-  attackInfo: {
-    size: { width: 70, height: 40 },
-    sprites: makeAttacks(2),
-    rate: 8, 
-    offset: { x: 5, y: 6}, 
-    scale: 5, 
-    duration: 20, 
-    speed: 2,
-    cooldown: 8
-  },
-  keySet: keySet1
-}
-
-const greenFlip = {
-  position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: makeChars(5),
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
-  attackInfo: {
-    size: { width: 70, height: 40 },
-    sprites: makeAttacks(3),
-    rate: 8, 
-    offset: { x: 5, y: 6}, 
-    scale: 5, 
-    duration: 20, 
-    speed: 2,
-    cooldown: 8
-  },
-  keySet: keySet2
-}
+  attackInfo: makeAttacks(1),
+};
 
 const blueBase = {
-  position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: makeChars(2),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
-  attackInfo: {
-    size: { width: 50, height: 20 },
-    sprites: makeAttacks(4),
-    rate: 4, 
-    offset: { x: 6, y: 8}, 
-    scale: 3.5, 
-    duration: 30, 
-    speed: 4,
-    cooldown: 6
-  },
-  keySet: keySet1
-}
-
-const blueFlip = {
-  position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: makeChars(6),
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
-  attackInfo: {
-    size: { width: 50, height: 20 },
-    sprites: makeAttacks(5),
-    rate: 4, 
-    offset: { x: 4, y: 8}, 
-    scale: 3.5, 
-    duration: 30, 
-    speed: 4,
-    cooldown: 6
-  },
-  keySet: keySet2
-}
+  attackInfo: makeAttacks(2),
+};
 
 const yellowBase = {
-  position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
   sprites: makeChars(3),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 3 },
-  attackInfo: {
-    size: { width: 40, height: 15 },
-    sprites: makeAttacks(6),
-    rate: 4, 
-    offset: { x: 4, y: 8}, 
-    scale: 2, 
-    duration: 40, 
-    speed: 6,
-    cooldown: 4
-  },
-  keySet: keySet1
-}
-
-const yellowFlip = {
-  position: { x: 700, y: 0 },
-  size: { width: 60, height: 75 },
-  sprites: makeChars(7),
-  rate: 4, 
-  offset: { x: 6, y: 6 }, 
-  scale: 5,
-  traits: { accel: 5, jump: 5, health: 100, damage: 3 },
-  attackInfo: {
-    size: { width: 40, height: 15 },
-    sprites: makeAttacks(7),
-    rate: 4, 
-    offset: { x: 2, y: 8}, 
-    scale: 2, 
-    duration: 40, 
-    speed: 6,
-    cooldown: 4
-  },
-  keySet: keySet2
-}
+  traits: { accel: 4, jump: 5, health: 100, damage: 3 },
+  attackInfo: makeAttacks(3),
+};
 
 const fighters = [
-  redBase, greenBase, blueBase, yellowBase, 
-  redFlip, greenFlip, blueFlip, yellowFlip
+  redBase, greenBase, blueBase, yellowBase
 ];

@@ -124,56 +124,36 @@ let change1 = true;
 let change2 = true;
 function charSelect() {
   if (change1) {
-    if (keys[keySet1.a]) {
-      select1 = Math.max(0, select1 - 1);
-      chosen1.sprite(select1);
-      change1 = false;
-      setTimeout(() => change1 = true, UILAG);
-    } else if (keys[keySet1.d]) {
-      select1 = Math.min(3, select1 + 1);
+    if (keys[keySet1.a] || keys[keySet1.d]) {
+      select1 = keys[keySet1.a] ? 
+        Math.max(0, select1 - 1) : 
+        Math.min(3, select1 + 1);
       chosen1.sprite(select1);
       change1 = false;
       setTimeout(() => change1 = true, UILAG);
     }
   }
   if (change2) {
-    if (keys[keySet2.a]) {
-      select2 = Math.max(0, select2 - 1);
+    if (keys[keySet2.a] || keys[keySet2.d]) {
+      select2 = keys[keySet1.a] ? 
+        Math.max(0, select2 - 1) : 
+        Math.min(3, select2 + 1);
       chosen2.sprite(select2);
       change2 = false;
       setTimeout(() => change2 = true, UILAG);
-    } else if (keys[keySet2.d]) {
-      select2 = Math.min(3, select2 + 1);
-      chosen2.sprite(select2);
-      change2 = false;
-      setTimeout(() => change2 = true, UILAG);
-    }
+    } 
   }  
 }
 
 // Map selection sprites
-const maps = [
-  new Sprite({
-    position: { x: 40, y: 240 },
+const maps = [];
+for (let i = 0; i < 4; i++) {
+  maps.push(new Sprite({    
+    position: { x: 40 + (230 * i), y: 240 },
     size: { width: 200, height: 100 },
-    source: mapSprites[0]
-  }), 
-  new Sprite({
-    position: { x: 270, y: 240 },
-    size: { width: 200, height: 100 },
-    source: mapSprites[1]
-  }),
-  new Sprite({
-    position: { x: 500, y: 240 },
-    size: { width: 200, height: 100 },
-    source: mapSprites[2]
-  }),
-  new Sprite({
-    position: { x: 730, y: 240 },
-    size: { width: 200, height: 100 },
-    source: mapSprites[3]
-  })
-];
+    source: mapSprites[i]
+  }))
+};
 
 // Map selection input
 let currMap = 0;
@@ -226,12 +206,12 @@ function updateTimer() {
 // Game start declarations
 function startGame() {
   p1 = new Fighter(
-    fighters[select1], attacks1, 'P1', 
-    null, select1, '#b30000'
+    fighters[select1], { x: 200, y: 200 }, keySet1,
+    attacks1, 'P1', null, select1, '#b30000'
   );
   p2 = new Fighter(
-    fighters[select2 + 4], attacks2, 'P2', 
-    p1, select2, '#0000b3'
+    fighters[select2], { x: 700, y: 200 }, keySet2,
+    attacks2, 'P2', p1, select2, '#0000b3'
   );
   p1.opp = p2;
   startTimer(30);
@@ -341,13 +321,11 @@ window.onmouseup = function(e) {
   let mX = e.pageX - rect.left;
   let mY = e.pageY - rect.top;
   if (menu === 0 && cursorOn(mX, mY, box1)) {
-    // Switch to character selection screen
-    menu = 1;
+    menu = 1; // Switch to character selection screen
   } else if (menu === 1 && cursorOn(mX, mY, box2)) {
-    // Switch to stage selection screen
-    menu = 2;
+    menu = 2; // Switch to stage selection screen
   } else if (menu === 2 && cursorOn(mX, mY, box3)) {
     startGame();
-    menu = 3;
+    menu = 3; // Switch to game screen
   }
 }

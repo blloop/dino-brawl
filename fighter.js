@@ -5,9 +5,9 @@ const LOW_HEIGHT = 20;
 
 class Fighter extends AnimatedSprite {
   constructor({
-    position, size, sprites, rate, offset, scale, 
-    traits, attackInfo, keySet
-  }, attacks, id, opp, select, color) {
+    size, sprites, rate, offset, scale, 
+    traits, attackInfo
+  }, position, keySet, attacks, id, opp, select, color) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
@@ -34,10 +34,10 @@ class Fighter extends AnimatedSprite {
     // Draw player tag above player
     c.font = '42px Forte';
     c.fillStyle = '#cccccc';
-    c.fillText(this.id, this.position.x + 14, this.position.y - 38, 42, 42);
+    c.fillText(this.id, this.position.x + 14, this.position.y - 18, 42, 42);
     c.font = '40px Forte';
     c.fillStyle = this.color;
-    c.fillText(this.id, this.position.x + 15, this.position.y - 40, 40, 40);
+    c.fillText(this.id, this.position.x + 15, this.position.y - 20, 40, 40);
 
     // Draw sprite using parent method
     super.draw();
