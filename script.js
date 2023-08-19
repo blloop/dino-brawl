@@ -26,28 +26,10 @@ const bg = new Background({
 
 // Background expansion mechanic
 let offset = 0;
-function shiftBg(x, isOne) {
-  if (isOne && (
-    p2.position.x < OFFPAD ||
-    p2.position.x + p2.width > canvas.width - OFFPAD
-  )) {
-    return;
-  }
-  if (!isOne && (
-    p1.position.x < OFFPAD ||
-    p1.position.x + p1.width > canvas.width - OFFPAD
-  )) {
-    return;
-  }
-  let old = offset;
+function shiftBg(x) {
   offset += x;
   offset = Math.min(offset, OFFLIM);
   offset = Math.max(offset, OFFLIM * -1);
-  if (isOne) {
-    p2.position.x -= offset - old;
-  } else {
-    p1.position.x -= offset - old;
-  }
 }
 
 // Fighter class declarations

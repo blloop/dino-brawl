@@ -62,9 +62,13 @@ class Fighter extends AnimatedSprite {
     }
 
     this.position.x += this.velocity.x;
-    if (this.position.x + this.width > canvas.width - OFFPAD ||
-      collide(this, this.opp)
-    ) {
+    if (this.position.x < OFFPAD) {
+      shiftBg(this.position.x - OFFPAD);
+      this.position.x = OFFPAD;
+    } else if (this.position.x + this.width > canvas.width - OFFPAD) {
+      shiftBg(this.position.x + this.width - canvas.width + OFFPAD);
+      this.position.x = canvas.width - OFFPAD - this.width;
+    } else if (collide(this, this.opp)) {
       this.position.x -= this.velocity.x;
     }
 
