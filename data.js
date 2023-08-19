@@ -23,34 +23,37 @@ keys[keySet2.d] = false;
 
 // List of sprites
 const charSprites = [
-  './img/red-sprites.png',
-  './img/green-sprites.png',
-  './img/blue-sprites.png',
-  './img/yellow-sprites.png',
-  './img/red-sprites-flip.png',
-  './img/green-sprites-flip.png',
-  './img/blue-sprites-flip.png',
-  './img/yellow-sprites-flip.png'
+  './sprites/red-sprites.png',
+  './sprites/green-sprites.png',
+  './sprites/blue-sprites.png',
+  './sprites/yellow-sprites.png',
+  './sprites/red-sprites-flip.png',
+  './sprites/green-sprites-flip.png',
+  './sprites/blue-sprites-flip.png',
+  './sprites/yellow-sprites-flip.png'
 ];
 const attSprites = [
-  './img/swipe.png',
-  './img/lick.png',
-  './img/spit.png',
-  './img/fire.png',
-  './img/swipe-flip.png',
-  './img/lick-flip.png',
-  './img/spit-flip.png',
-  './img/fire-flip.png'
+  './attacks/swipe.png',
+  './attacks/lick.png',
+  './attacks/spit.png',
+  './attacks/fire.png',
+  './attacks/swipe-flip.png',
+  './attacks/lick-flip.png',
+  './attacks/spit-flip.png',
+  './attacks/fire-flip.png'
 ];
+const attCounts = [
+  6, 6, 9, 9, 7, 7, 6, 6
+]
 const mapSprites = [
-  './img/bg1.png',
-  './img/bg2.png',
-  './img/bg3.png',
-  './img/bg4.png'
+  './stages/bg1.png',
+  './stages/bg2.png',
+  './stages/bg3.png',
+  './stages/bg4.png'
 ];
 
-// Create frame data from template
-function makeFrames(idx) {
+// Create char sprites from template
+function makeChars(idx) {
   return ({
     src: charSprites[idx],
     frames: 34,
@@ -65,6 +68,15 @@ function makeFrames(idx) {
   });  
 }
 
+// Create attack sprites from template
+function makeAttacks(idx) {
+  return ({
+    src: attSprites[idx],
+    frames: attCounts[idx],
+    idle: [0, attCounts[idx] - 1]
+  })
+}
+
 // List of fighter names
 const fighterNames = [
   'chomper', 'slurper', 'spitter', 'kindler'
@@ -74,18 +86,14 @@ const fighterNames = [
 const redBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(0),
+  sprites: makeChars(0),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
-    sprites: {
-      src: './img/swipe.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
+    sprites: makeAttacks(0),
     rate: 16, 
     offset: { x: 8, y: 6}, 
     scale: 4, 
@@ -99,18 +107,14 @@ const redBase = {
 const redFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(4),
+  sprites: makeChars(4),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4, jump: 5, health: 100, damage: 10 },
   attackInfo: {
     size: { width: 50, height: 50 },
-    sprites: {
-      src: './img/swipe-flip.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
+    sprites: makeAttacks(1),
     rate: 16, 
     offset: { x: 3, y: 6}, 
     scale: 4, 
@@ -124,18 +128,14 @@ const redFlip = {
 const greenBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(1),
+  sprites: makeChars(1),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
   attackInfo: {
     size: { width: 70, height: 40 },
-    sprites: {
-      src: './img/lick.png',
-      frames: 9, 
-      idle: [0, 8]
-    },
+    sprites: makeAttacks(2),
     rate: 8, 
     offset: { x: 5, y: 6}, 
     scale: 5, 
@@ -149,18 +149,14 @@ const greenBase = {
 const greenFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(5),
+  sprites: makeChars(5),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 8 },
   attackInfo: {
     size: { width: 70, height: 40 },
-    sprites: {
-      src: './img/lick-flip.png',
-      frames: 9, 
-      idle: [0, 8]
-    },
+    sprites: makeAttacks(3),
     rate: 8, 
     offset: { x: 5, y: 6}, 
     scale: 5, 
@@ -174,18 +170,14 @@ const greenFlip = {
 const blueBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(2),
+  sprites: makeChars(2),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
   attackInfo: {
     size: { width: 50, height: 20 },
-    sprites: {
-      src: './img/spit.png',
-      frames: 7, 
-      idle: [0, 6]
-    },
+    sprites: makeAttacks(4),
     rate: 4, 
     offset: { x: 6, y: 8}, 
     scale: 3.5, 
@@ -199,18 +191,14 @@ const blueBase = {
 const blueFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(6),
+  sprites: makeChars(6),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 4.5, jump: 5, health: 100, damage: 6 },
   attackInfo: {
     size: { width: 50, height: 20 },
-    sprites: {
-      src: './img/spit-flip.png',
-      frames: 7, 
-      idle: [0, 6]
-    },
+    sprites: makeAttacks(5),
     rate: 4, 
     offset: { x: 4, y: 8}, 
     scale: 3.5, 
@@ -224,18 +212,14 @@ const blueFlip = {
 const yellowBase = {
   position: { x: 200, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(3),
+  sprites: makeChars(3),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 5, jump: 5, health: 100, damage: 3 },
   attackInfo: {
     size: { width: 40, height: 15 },
-    sprites: {
-      src: './img/fire.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
+    sprites: makeAttacks(6),
     rate: 4, 
     offset: { x: 4, y: 8}, 
     scale: 2, 
@@ -249,18 +233,14 @@ const yellowBase = {
 const yellowFlip = {
   position: { x: 700, y: 0 },
   size: { width: 60, height: 75 },
-  sprites: makeFrames(7),
+  sprites: makeChars(7),
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
   traits: { accel: 5, jump: 5, health: 100, damage: 3 },
   attackInfo: {
     size: { width: 40, height: 15 },
-    sprites: {
-      src: './img/fire-flip.png',
-      frames: 6, 
-      idle: [0, 5]
-    },
+    sprites: makeAttacks(7),
     rate: 4, 
     offset: { x: 2, y: 8}, 
     scale: 2, 
