@@ -7,7 +7,7 @@ class Fighter extends AnimatedSprite {
   constructor({
     position, size, sprites, rate, offset, scale, 
     traits, attackInfo, keySet
-  }, attacks, id, opp, num) {
+  }, attacks, id, opp, select, color) {
     super({ 
       position, size, sprites, rate, offset, scale
     });
@@ -20,7 +20,8 @@ class Fighter extends AnimatedSprite {
     this.attacks = attacks;
     this.id = id;
     this.opp = opp;
-    this.num = num;
+    this.select = select;
+    this.color = color;
 
     this.crouch = false;
     this.attIdx = 0;
@@ -31,9 +32,12 @@ class Fighter extends AnimatedSprite {
 
   draw() {
     // Draw player tag above player
-    c.fillStyle = 'black';
-    c.font = '24px Verdana';
-    c.fillText(this.id, this.position.x + 15, this.position.y - 20);
+    c.font = '42px Forte';
+    c.fillStyle = '#cccccc';
+    c.fillText(this.id, this.position.x + 14, this.position.y - 38, 42, 42);
+    c.font = '40px Forte';
+    c.fillStyle = this.color;
+    c.fillText(this.id, this.position.x + 15, this.position.y - 40, 40, 40);
 
     // Draw sprite using parent method
     super.draw();
@@ -127,7 +131,7 @@ class Fighter extends AnimatedSprite {
         duration: 30 * this.attackInfo.duration
       });
       this.attacks[this.attIdx].setSprites(
-        attSprites[this.num + (this.flip ? 4 : 0)]
+        attSprites[this.select + (this.flip ? 4 : 0)]
       ),
       this.attacks[this.attIdx].create();
       this.attIdx = (this.attIdx + 1) % ATT_COUNT;

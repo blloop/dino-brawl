@@ -21,7 +21,14 @@ const UILAG = 150;
 const bg = new Background({
   position: { x: 0, y: 0 },
   size: { width: 1260, height: 540 },
-  source: './img/bg1.png'
+  source: './stages/bg1.png'
+})
+
+// Timer image
+const sign = new Sprite({
+  position: { x: 430, y: 10 },
+  size: { width: 100, height: 100 }, 
+  source: './ui/sign.png'
 })
 
 // Background expansion mechanic
@@ -83,7 +90,7 @@ let chosen1 = new AnimatedSprite({
   position: {x: 220, y: 120},
   size: {x: 120, y: 150},
   sprites: {
-    src: './img/select-p1.png',
+    src: './sprites/select-p1.png',
     frames: 16,
     idle: [0, 3],
     0: [0, 3],
@@ -99,7 +106,7 @@ let chosen2 = new AnimatedSprite({
   position: {x: 640, y: 120},
   size: {x: 120, y: 150},
   sprites: {
-    src: './img/select-p2.png',
+    src: './sprites/select-p2.png',
     frames: 16,
     idle: [0, 3],
     0: [0, 3],
@@ -218,8 +225,14 @@ function updateTimer() {
 
 // Game start declarations
 function startGame() {
-  p1 = new Fighter(fighters[select1], attacks1, 'P1', null, select1);
-  p2 = new Fighter(fighters[select2 + 4], attacks2, 'P2', p1, select2);
+  p1 = new Fighter(
+    fighters[select1], attacks1, 'P1', 
+    null, select1, '#b30000'
+  );
+  p2 = new Fighter(
+    fighters[select2 + 4], attacks2, 'P2', 
+    p1, select2, '#0000b3'
+  );
   p1.opp = p2;
   startTimer(30);
   offset = 0;
@@ -232,7 +245,6 @@ let box2 = [380, 380, 180, 80, false]; // start button
 let box3 = [360, 380, 220, 80, false]; // start button
 let box4 = [30, 40, 400, 30]; // p1 health bar
 let box5 = [530, 40, 400, 30]; // p2 health bar
-let box6 = [430, 10, 100, 100]; // timer
 
 // Event loop function
 function loop() {
@@ -255,12 +267,13 @@ function loop() {
       break;
     default: // Game
       bg.update();
-      checkCombat();
-      checkGame();
-      drawStatus(box4, box5, box6);
+      sign.update();
       p1.update();
       p2.update();
+      drawStatus(box4, box5);
+      checkCombat();
       checkFlip();
+      checkGame();
       attacks1.forEach((a) => a ? a.update() : void(0));
       attacks2.forEach((a) => a ? a.update() : void(0)); 
   }
