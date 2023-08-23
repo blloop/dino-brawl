@@ -49,6 +49,17 @@ class Fighter extends AnimatedSprite {
       this.sprite('hit');
     }
   }
+  shiftBg(x) {
+    offset += x;
+    offset = Math.min(offset, OFFLIM);
+    offset = Math.max(offset, OFFLIM * -1);
+    this.opp.position.x -= x;
+    if (this.opp.position.x < OFFPAD || 
+      this.opp.position.x + this.opp.width > canvas.width - OFFPAD
+    ) {
+      this.opp.position.x += x;
+    }
+  }
 
   update() {
     // Horizontal velocity
@@ -67,10 +78,10 @@ class Fighter extends AnimatedSprite {
 
     this.position.x += this.velocity.x;
     if (this.position.x < OFFPAD) {
-      shiftBg(this.position.x - OFFPAD);
+      this.shiftBg(this.position.x - OFFPAD);
       this.position.x = OFFPAD;
     } else if (this.position.x + this.width > canvas.width - OFFPAD) {
-      shiftBg(this.position.x + this.width - canvas.width + OFFPAD);
+      this.shiftBg(this.position.x + this.width - canvas.width + OFFPAD);
       this.position.x = canvas.width - OFFPAD - this.width;
     } else if (collide(this, this.opp)) {
       this.position.x -= this.velocity.x;
@@ -91,6 +102,9 @@ class Fighter extends AnimatedSprite {
       if (collide(this, this.opp)) {
         this.position.y -= this.velocity.y;
         this.velocity.y = 0;
+        if (collide(this, this.opp)) {
+          this.position.y -= LOW_HEIGHT;
+        }
       }
     }
     // Crouching mechanic

@@ -12,10 +12,9 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 // List of game constants
 const gravity = 0.5;
-const OFFLIM = 150;
-const OFFPAD = 50;
-const PUSH = 10;
-const UILAG = 150;
+const OFFLIM = 150; // maximum camera offset
+const OFFPAD = 50; // minimum fighter distance from game border
+const UILAG = 150; // interface selection delay
 
 // Background image
 const bg = new Background({
@@ -23,6 +22,7 @@ const bg = new Background({
   size: { width: 1260, height: 540 },
   source: './stages/bg1.png'
 })
+let offset = 0; // background expansion
 
 // Timer image
 const sign = new Sprite({
@@ -31,13 +31,6 @@ const sign = new Sprite({
   source: './ui/sign.png'
 })
 
-// Background expansion mechanic
-let offset = 0;
-function shiftBg(x) {
-  offset += x;
-  offset = Math.min(offset, OFFLIM);
-  offset = Math.max(offset, OFFLIM * -1);
-}
 
 // Fighter class declarations
 const attacks1 = []; // attack queue
