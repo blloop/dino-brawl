@@ -50,13 +50,15 @@ class Fighter extends AnimatedSprite {
     }
   }
   shiftBg(x) {
+    let oldOff = offset;
     offset += x;
-    offset = Math.min(offset, OFFLIM);
-    offset = Math.max(offset, OFFLIM * -1);
+    offset = Math.max(Math.min(offset, OFFLIM), OFFLIM * -1);
+    if (offset === oldOff) return;
     this.opp.position.x -= x;
-    if (this.opp.position.x < OFFPAD || 
-      this.opp.position.x + this.opp.width > canvas.width - OFFPAD
+    if ((x > 0 && this.opp.position.x < OFFPAD) || 
+      (x < 0 && this.opp.position.x + this.opp.width > canvas.width - OFFPAD)
     ) {
+      offset = oldOff;
       this.opp.position.x += x;
     }
   }

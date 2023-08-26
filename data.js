@@ -52,12 +52,12 @@ const attData = { // [red, green, blue, yellow]
   width: [50, 70, 50, 40],
   height: [50, 70, 20, 15],
   count: [6, 9, 7, 6],
-  rate: [16, 8, 4, 4],
+  rate: [8, 8, 4, 4],
   offsetX: [5, 5, 5, 2],
   offsetY: [5, 6, 8, 8],
   scale: [4, 5, 3.5, 2],
-  duration: [5, 20, 30, 40], 
-  speed: [0, 2, 4, 6],
+  duration: [10, 20, 30, 30], 
+  speed: [0, 3, 4, 6],
   cooldown: [12, 8, 6, 4]
 }
 
@@ -143,7 +143,7 @@ const yellowBase = {
   rate: 4, 
   offset: { x: 6, y: 6 }, 
   scale: 5,
-  traits: { accel: 4, jump: 5, health: 100, damage: 3 },
+  traits: { accel: 4, jump: 5, health: 100, damage: 4 },
   attackInfo: makeAttacks(3),
 };
 
