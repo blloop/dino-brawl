@@ -31,6 +31,28 @@ const sign = new Sprite({
   source: './ui/sign.png'
 })
 
+// Health bar images
+const hp1a = new Sprite({
+  position: { x: 30, y: 35 }, 
+  size: { width: 400, height: 40 }, 
+  source: './ui/health-bar.png'
+})
+const hp1b = new Sprite({
+  position: { x: 30, y: 35 }, 
+  size: { width: 400, height: 40 }, 
+  source: './ui/health-overlay.png'
+})
+const hp2a = new Sprite({
+  position: { x: 530, y: 35 }, 
+  size: { width: 400, height: 40 }, 
+  source: './ui/health-bar.png'
+})
+const hp2b = new Sprite({
+  position: { x: 530, y: 35 }, 
+  size: { width: 400, height: 40 }, 
+  source: './ui/health-overlay.png'
+})
+
 
 // Fighter class declarations
 const attacks1 = []; // attack queue
@@ -128,7 +150,7 @@ function charSelect() {
   }
   if (change2) {
     if (keys[keySet2.a] || keys[keySet2.d]) {
-      select2 = keys[keySet1.a] ? 
+      select2 = keys[keySet2.a] ? 
         Math.max(0, select2 - 1) : 
         Math.min(3, select2 + 1);
       chosen2.sprite(select2);
@@ -243,7 +265,11 @@ function loop() {
       sign.update();
       p1.update();
       p2.update();
+      hp1a.update();
+      hp2a.update();
       drawStatus(box4, box5);
+      hp1b.update();
+      hp2b.update();
       checkCombat();
       checkFlip();
       checkGame();

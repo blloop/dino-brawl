@@ -16,9 +16,9 @@ let keySet2 = {
   atk: '/'
 };
    
+keys[keySet1.w] = false;
 keys[keySet1.a] = false;
-keys[keySet1.d] = false;
-keys[keySet2.a] = false;
+keys[keySet2.s] = false;
 keys[keySet2.d] = false;
 
 // List of sprites
