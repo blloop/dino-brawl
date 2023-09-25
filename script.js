@@ -26,20 +26,20 @@ let offset = 0; // background expansion
 
 // Timer image
 const sign = new Sprite({
-  position: { x: 430, y: 10 },
-  size: { width: 100, height: 100 }, 
+  position: { x: 415, y: 0 },
+  size: { width: 128, height: 128 }, 
   source: './ui/sign.png'
 })
 
 // Health bar images
 const hpa = new Sprite({
-  position: { x: 30, y: 35 }, 
-  size: { width: 400, height: 40 }, 
+  position: { x: 30, y: 25 }, 
+  size: { width: 400, height: 60 }, 
   source: './ui/hp-overlay-a.png'
 })
 const hpb = new Sprite({
-  position: { x: 530, y: 35 }, 
-  size: { width: 400, height: 40 }, 
+  position: { x: 530, y: 25 }, 
+  size: { width: 400, height: 60 }, 
   source: './ui/hp-overlay-b.png'
 })
 
@@ -233,8 +233,6 @@ let box5 = [555, 40, 350, 30]; // p2 health bar
 
 // Event loop function
 function loop() {
-  if (keys['-']) shiftBg(-10);
-  if (keys['=']) shiftBg(10);
   switch (menu) {
     case 0: // Main menu
       drawMain(box1);

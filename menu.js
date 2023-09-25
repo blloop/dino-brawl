@@ -68,11 +68,10 @@ function drawMaps(b1) {
 
 // Draw status bars (health, timer, result)
 function drawStatus(b1, b2) {
-  c.fillStyle = 'darkgreen';
-  c.fillRect(b1[0], b1[1], 
-    b1[2], b1[3]
-  );
-  c.fillStyle = 'yellow';
+  c.fillStyle = '#E04747';
+  c.fillRect(b1[0], b1[1], b1[2], b1[3]);
+  c.fillRect(b2[0], b2[1], b2[2], b2[3]);
+  c.fillStyle = '#FFEA35';
   c.fillRect(b1[0], b1[1], 
     b1[2] - (3.5 * (100 - p1.health)), b1[3]
   );
