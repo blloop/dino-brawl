@@ -68,12 +68,16 @@ function drawMaps(b1) {
 
 // Draw status bars (health, timer, result)
 function drawStatus(b1, b2) {
+  c.fillStyle = 'darkgreen';
+  c.fillRect(b1[0], b1[1], 
+    b1[2], b1[3]
+  );
   c.fillStyle = 'yellow';
   c.fillRect(b1[0], b1[1], 
-    b1[2] - (4 * (100 - p1.health)), b1[3]
+    b1[2] - (3.5 * (100 - p1.health)), b1[3]
   );
-  c.fillRect(b2[0] + (4 * (100 - p2.health)), 
-    b2[1], b2[2] - ( 4 * (100 - p2.health)), b2[3]);
+  c.fillRect(b2[0] + (3.5 * (100 - p2.health)), 
+    b2[1], b2[2] - ( 3.5 * (100 - p2.health)), b2[3]);
   c.font = '40px Forte';
   c.fillStyle = 'black';
   c.fillText(timer.toString().padStart(2, '0'), 460, 70);

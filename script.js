@@ -32,25 +32,15 @@ const sign = new Sprite({
 })
 
 // Health bar images
-const hp1a = new Sprite({
+const hpa = new Sprite({
   position: { x: 30, y: 35 }, 
   size: { width: 400, height: 40 }, 
-  source: './ui/health-bar.png'
+  source: './ui/hp-overlay-a.png'
 })
-const hp1b = new Sprite({
-  position: { x: 30, y: 35 }, 
-  size: { width: 400, height: 40 }, 
-  source: './ui/health-overlay.png'
-})
-const hp2a = new Sprite({
+const hpb = new Sprite({
   position: { x: 530, y: 35 }, 
   size: { width: 400, height: 40 }, 
-  source: './ui/health-bar.png'
-})
-const hp2b = new Sprite({
-  position: { x: 530, y: 35 }, 
-  size: { width: 400, height: 40 }, 
-  source: './ui/health-overlay.png'
+  source: './ui/hp-overlay-b.png'
 })
 
 
@@ -238,8 +228,8 @@ let menu = 0;
 let box1 = [370, 280, 200, 80, false]; // brawl button
 let box2 = [380, 380, 180, 80, false]; // start button
 let box3 = [360, 380, 220, 80, false]; // start button
-let box4 = [30, 40, 400, 30]; // p1 health bar
-let box5 = [530, 40, 400, 30]; // p2 health bar
+let box4 = [55, 40, 350, 30]; // p1 health bar
+let box5 = [555, 40, 350, 30]; // p2 health bar
 
 // Event loop function
 function loop() {
@@ -265,11 +255,9 @@ function loop() {
       sign.update();
       p1.update();
       p2.update();
-      hp1a.update();
-      hp2a.update();
       drawStatus(box4, box5);
-      hp1b.update();
-      hp2b.update();
+      hpa.update();
+      hpb.update();
       checkCombat();
       checkFlip();
       checkGame();
